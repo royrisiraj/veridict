@@ -1,0 +1,38 @@
+{
+  "fixture_id": "suspicious-1",
+  "title": "Known OpenPhish Credential Phishing Lure",
+  "expected_risk": "CONFIRMED_MALICIOUS",
+  "input": {
+    "url": "https://secure-login-paypaI-auth.com/verify?session_token=secret_abc123",
+    "message": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypaI-auth.com/verify?session_token=secret_abc123 within 30 minutes."
+  },
+  "simulated_checks": {
+    "url": {
+      "normalized_url": "https://secure-login-paypai-auth.com/verify?session_token=[REDACTED]",
+      "typosquat_target": "paypal.com",
+      "homograph_detected": true,
+      "suspicious_tld": false
+    },
+    "tls": {
+      "status": "COMPLETE",
+      "hostname_ok": true,
+      "expired": false,
+      "self_signed": false,
+      "issuer": "R3",
+      "cert_sha256": "a94f3c1e72b8501c2d9a44b8f12e3d4c5b6a7980123456789abcdef012345678"
+    },
+    "threat_intel": {
+      "status": "COMPLETE",
+      "provider": "openphish",
+      "matched": true,
+      "queried_at": "2026-11-10T12:00:00Z"
+    },
+    "redirects": {
+      "status": "COMPLETE",
+      "chain": [
+        "https://secure-login-paypai-auth.com/verify?session_token=[REDACTED]"
+      ],
+      "cross_domain_hops": 0
+    }
+  }
+}

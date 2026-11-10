@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+
+node_modules/
+.venv/
+.next/
+*.db
+__pycache__/
+*.py[cod]
+
+contracts/cache/
+contracts/artifacts/
