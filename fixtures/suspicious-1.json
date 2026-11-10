@@ -19,7 +19,8 @@
       "expired": false,
       "self_signed": false,
       "issuer": "R3",
-      "cert_sha256": "a94f3c1e72b8501c2d9a44b8f12e3d4c5b6a7980123456789abcdef012345678"
+      "cert_sha256": "9c64510cdad4be2461a4454a762308d6ea89f3df9b4cea3fdc248ace6cf9fb31",
+      "trusted": true
     },
     "threat_intel": {
       "status": "COMPLETE",

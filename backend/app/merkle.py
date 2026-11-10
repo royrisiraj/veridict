@@ -96,17 +96,25 @@ def build_merkle(leaves: list[bytes]) -> MerkleTreeResult:
 
 def verify_leaf(root: bytes | str, leaf: bytes | str, proof: list[bytes | str]) -> bool:
     """Independently verify that `leaf` belongs to `root` via `proof` using sorted-pair folding."""
-    root_bytes = bytes.fromhex(root.removeprefix("0x")) if isinstance(root, str) else root
-    acc = bytes.fromhex(leaf.removeprefix("0x")) if isinstance(leaf, str) else leaf
+    def decode(value):
+        if isinstance(value, str):
+            value = value[2:] if value[:2].lower() == "0x" else value
+            if len(value) != 64:
+                raise ValueError("Expected bytes32")
+            return bytes.fromhex(value)
+        if not isinstance(value, bytes):
+            raise ValueError("Expected bytes or hex")
+        return value
+
+    try:
+        root_bytes, acc = decode(root), decode(leaf)
+        siblings = [decode(sibling) for sibling in proof]
+    except (ValueError, TypeError):
+        return False
     if len(root_bytes) != 32 or len(acc) != 32:
         return False
 
-    for sibling in proof:
-        sib_bytes = (
-            bytes.fromhex(sibling.removeprefix("0x"))
-            if isinstance(sibling, str)
-            else sibling
-        )
+    for sib_bytes in siblings:
         if len(sib_bytes) != 32:
             return False
         acc = parent_hash(acc, sib_bytes)

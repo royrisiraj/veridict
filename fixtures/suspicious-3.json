@@ -1,0 +1,45 @@
+{
+  "fixture_id": "suspicious-3",
+  "title": "Three redirects to an unrelated new destination",
+  "expected_risk": "SUSPICIOUS",
+  "input": {
+    "url": "https://news-gateway.example/start",
+    "message": "Your shared document is ready to view."
+  },
+  "simulated_checks": {
+    "url": {
+      "normalized_url": "https://news-gateway.example/start",
+      "typosquat_target": null,
+      "homograph_detected": false,
+      "confirmed_impersonation": false,
+      "brand_impersonation": false,
+      "suspicious_tld": false
+    },
+    "tls": {
+      "status": "COMPLETE",
+      "hostname_ok": true,
+      "expired": false,
+      "self_signed": false,
+      "trusted": true,
+      "issuer": "Fixture Public CA",
+      "cert_sha256": "90960c64b3088c30bff65f2159ef2a6ab459c71ca97634138da7248fe3ba0fe4"
+    },
+    "threat_intel": {
+      "status": "COMPLETE",
+      "provider": "openphish",
+      "matched": false,
+      "queried_at": "2026-11-10T12:00:00Z"
+    },
+    "redirects": {
+      "status": "COMPLETE",
+      "chain": [
+        "https://news-gateway.example/start",
+        "https://redirect-one.example/go",
+        "https://redirect-two.example/go",
+        "https://newly-observed.example/document"
+      ],
+      "cross_domain_hops": 3,
+      "untrusted_destination": true
+    }
+  }
+}

@@ -1,0 +1,1638 @@
+{
+  "components": {
+    "schemas": {
+      "ChainReceipt": {
+        "additionalProperties": false,
+        "properties": {
+          "block_number": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Block Number"
+          },
+          "contract_address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contract Address"
+          },
+          "mode": {
+            "enum": [
+              "evm",
+              "fixture"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "network": {
+            "title": "Network",
+            "type": "string"
+          },
+          "tx_hash": {
+            "anyOf": [
+              {
+                "pattern": "^0x[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tx Hash"
+          }
+        },
+        "required": [
+          "tx_hash",
+          "block_number",
+          "contract_address",
+          "network",
+          "mode"
+        ],
+        "title": "ChainReceipt",
+        "type": "object"
+      },
+      "Claim": {
+        "additionalProperties": false,
+        "properties": {
+          "confidence": {
+            "default": "medium",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Confidence",
+            "type": "string"
+          },
+          "evidence_ids": {
+            "items": {
+              "maxLength": 64,
+              "pattern": "^[a-z]+:[0-9]+$",
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Evidence Ids",
+            "type": "array"
+          },
+          "id": {
+            "maxLength": 64,
+            "pattern": "^[a-z]+:[0-9]+$",
+            "title": "Id",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 700,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text",
+          "evidence_ids"
+        ],
+        "title": "Claim",
+        "type": "object"
+      },
+      "CoverageMap": {
+        "additionalProperties": false,
+        "properties": {
+          "redirects": {
+            "enum": [
+              "COMPLETE",
+              "INCOMPLETE",
+              "TIMEOUT",
+              "FAILED",
+              "UNCONFIGURED"
+            ],
+            "title": "Redirects",
+            "type": "string"
+          },
+          "threat_intel": {
+            "enum": [
+              "COMPLETE",
+              "INCOMPLETE",
+              "TIMEOUT",
+              "FAILED",
+              "UNCONFIGURED"
+            ],
+            "title": "Threat Intel",
+            "type": "string"
+          },
+          "tls": {
+            "enum": [
+              "COMPLETE",
+              "INCOMPLETE",
+              "TIMEOUT",
+              "FAILED",
+              "UNCONFIGURED"
+            ],
+            "title": "Tls",
+            "type": "string"
+          },
+          "url": {
+            "enum": [
+              "COMPLETE",
+              "INCOMPLETE",
+              "TIMEOUT",
+              "FAILED",
+              "UNCONFIGURED"
+            ],
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "tls",
+          "threat_intel",
+          "redirects"
+        ],
+        "title": "CoverageMap",
+        "type": "object"
+      },
+      "EvidenceBundle-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_claims": {
+            "items": {
+              "$ref": "#/components/schemas/Claim"
+            },
+            "maxItems": 30,
+            "title": "Ai Claims",
+            "type": "array"
+          },
+          "coverage": {
+            "$ref": "#/components/schemas/CoverageMap"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "discriminator": {
+                "mapping": {
+                  "message_span": "#/components/schemas/MessageSpanEvidence",
+                  "redirect": "#/components/schemas/RedirectEvidence",
+                  "threat_intel": "#/components/schemas/ThreatEvidence",
+                  "tls": "#/components/schemas/TLSEvidence",
+                  "url": "#/components/schemas/URLEvidence"
+                },
+                "propertyName": "type"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/URLEvidence"
+                },
+                {
+                  "$ref": "#/components/schemas/TLSEvidence"
+                },
+                {
+                  "$ref": "#/components/schemas/ThreatEvidence"
+                },
+                {
+                  "$ref": "#/components/schemas/RedirectEvidence"
+                },
+                {
+                  "$ref": "#/components/schemas/MessageSpanEvidence"
+                }
+              ]
+            },
+            "maxItems": 100,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 15,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "normalized_url": {
+            "title": "Normalized Url",
+            "type": "string"
+          },
+          "provenance": {
+            "$ref": "#/components/schemas/Provenance"
+          },
+          "report_id": {
+            "title": "Report Id",
+            "type": "string"
+          },
+          "risk": {
+            "$ref": "#/components/schemas/RiskClass"
+          },
+          "schema": {
+            "const": "sealed-evidence/1",
+            "default": "sealed-evidence/1",
+            "title": "Schema",
+            "type": "string"
+          },
+          "social_engineering_indicators": {
+            "items": {
+              "$ref": "#/components/schemas/SocialIndicator"
+            },
+            "maxItems": 30,
+            "title": "Social Engineering Indicators",
+            "type": "array"
+          }
+        },
+        "required": [
+          "report_id",
+          "created_at",
+          "normalized_url",
+          "risk",
+          "evidence",
+          "ai_claims",
+          "coverage",
+          "provenance"
+        ],
+        "title": "EvidenceBundle",
+        "type": "object"
+      },
+      "EvidenceBundle-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_claims": {
+            "items": {
+              "$ref": "#/components/schemas/Claim"
+            },
+            "maxItems": 30,
+            "title": "Ai Claims",
+            "type": "array"
+          },
+          "coverage": {
+            "$ref": "#/components/schemas/CoverageMap"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "discriminator": {
+                "mapping": {
+                  "message_span": "#/components/schemas/MessageSpanEvidence",
+                  "redirect": "#/components/schemas/RedirectEvidence",
+                  "threat_intel": "#/components/schemas/ThreatEvidence",
+                  "tls": "#/components/schemas/TLSEvidence",
+                  "url": "#/components/schemas/URLEvidence"
+                },
+                "propertyName": "type"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/URLEvidence"
+                },
+                {
+                  "$ref": "#/components/schemas/TLSEvidence"
+                },
+                {
+                  "$ref": "#/components/schemas/ThreatEvidence"
+                },
+                {
+                  "$ref": "#/components/schemas/RedirectEvidence"
+                },
+                {
+                  "$ref": "#/components/schemas/MessageSpanEvidence"
+                }
+              ]
+            },
+            "maxItems": 100,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 15,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "normalized_url": {
+            "title": "Normalized Url",
+            "type": "string"
+          },
+          "provenance": {
+            "$ref": "#/components/schemas/Provenance"
+          },
+          "report_id": {
+            "pattern": "^0x[0-9a-f]{64}$",
+            "title": "Report Id",
+            "type": "string"
+          },
+          "risk": {
+            "$ref": "#/components/schemas/RiskClass"
+          },
+          "schema": {
+            "const": "sealed-evidence/1",
+            "default": "sealed-evidence/1",
+            "title": "Schema",
+            "type": "string"
+          },
+          "social_engineering_indicators": {
+            "items": {
+              "$ref": "#/components/schemas/SocialIndicator"
+            },
+            "maxItems": 30,
+            "title": "Social Engineering Indicators",
+            "type": "array"
+          }
+        },
+        "required": [
+          "report_id",
+          "created_at",
+          "normalized_url",
+          "risk",
+          "evidence",
+          "ai_claims",
+          "coverage",
+          "provenance"
+        ],
+        "title": "EvidenceBundle",
+        "type": "object"
+      },
+      "FixtureMetadata": {
+        "additionalProperties": false,
+        "properties": {
+          "expected_risk": {
+            "$ref": "#/components/schemas/RiskClass"
+          },
+          "fixture_id": {
+            "title": "Fixture Id",
+            "type": "string"
+          },
+          "input": {
+            "$ref": "#/components/schemas/InvestigateRequest"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fixture_id",
+          "title",
+          "expected_risk",
+          "input"
+        ],
+        "title": "FixtureMetadata",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "chain_connected": {
+            "title": "Chain Connected",
+            "type": "boolean"
+          },
+          "chain_mode": {
+            "enum": [
+              "evm",
+              "fixture"
+            ],
+            "title": "Chain Mode",
+            "type": "string"
+          },
+          "contract_address": {
+            "title": "Contract Address",
+            "type": "string"
+          },
+          "status": {
+            "const": "ok",
+            "default": "ok",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "chain_connected",
+          "contract_address",
+          "chain_mode"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "InvestigateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "fixture_id": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fixture Id"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "maxLength": 12000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "url": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "title": "InvestigateRequest",
+        "type": "object"
+      },
+      "InvestigationReport": {
+        "additionalProperties": false,
+        "properties": {
+          "bundle": {
+            "$ref": "#/components/schemas/EvidenceBundle-Output"
+          },
+          "chain_receipt": {
+            "$ref": "#/components/schemas/ChainReceipt"
+          },
+          "merkle": {
+            "$ref": "#/components/schemas/MerkleReport"
+          },
+          "verification": {
+            "$ref": "#/components/schemas/VerificationResponse"
+          }
+        },
+        "required": [
+          "bundle",
+          "merkle",
+          "chain_receipt",
+          "verification"
+        ],
+        "title": "InvestigationReport",
+        "type": "object"
+      },
+      "MerkleLeaf": {
+        "additionalProperties": false,
+        "properties": {
+          "hash": {
+            "pattern": "^0x[0-9a-f]{64}$",
+            "title": "Hash",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "title": "Payload",
+            "type": "object"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "payload",
+          "hash"
+        ],
+        "title": "MerkleLeaf",
+        "type": "object"
+      },
+      "MerkleReport": {
+        "additionalProperties": false,
+        "properties": {
+          "leaves": {
+            "items": {
+              "$ref": "#/components/schemas/MerkleLeaf"
+            },
+            "title": "Leaves",
+            "type": "array"
+          },
+          "proofs_by_id": {
+            "additionalProperties": {
+              "items": {
+                "pattern": "^0x[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": "Proofs By Id",
+            "type": "object"
+          },
+          "root": {
+            "pattern": "^0x[0-9a-f]{64}$",
+            "title": "Root",
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "leaves",
+          "proofs_by_id"
+        ],
+        "title": "MerkleReport",
+        "type": "object"
+      },
+      "MessageData": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "minimum": 0.0,
+            "title": "End",
+            "type": "integer"
+          },
+          "pattern_type": {
+            "enum": [
+              "urgency",
+              "credential_harvesting",
+              "otp_request",
+              "seed_phrase_request",
+              "payment_lure",
+              "brand_impersonation"
+            ],
+            "title": "Pattern Type",
+            "type": "string"
+          },
+          "redacted_excerpt": {
+            "maxLength": 600,
+            "title": "Redacted Excerpt",
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Sha256",
+            "type": "string"
+          },
+          "start": {
+            "minimum": 0.0,
+            "title": "Start",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "pattern_type",
+          "sha256",
+          "redacted_excerpt"
+        ],
+        "title": "MessageData",
+        "type": "object"
+      },
+      "MessageSpanEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/MessageData"
+          },
+          "id": {
+            "maxLength": 64,
+            "pattern": "^[a-z]+:[0-9]+$",
+            "title": "Id",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "fixture",
+              "live",
+              "local"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "COMPLETE",
+              "INCOMPLETE",
+              "TIMEOUT",
+              "FAILED",
+              "UNCONFIGURED"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "type": {
+            "const": "message_span",
+            "default": "message_span",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "mode",
+          "data"
+        ],
+        "title": "MessageSpanEvidence",
+        "type": "object"
+      },
+      "Provenance": {
+        "additionalProperties": false,
+        "properties": {
+          "analyzer": {
+            "enum": [
+              "fixture",
+              "deterministic",
+              "openai"
+            ],
+            "title": "Analyzer",
+            "type": "string"
+          },
+          "collection": {
+            "enum": [
+              "fixture",
+              "live",
+              "local"
+            ],
+            "title": "Collection",
+            "type": "string"
+          },
+          "fixture_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fixture Id"
+          }
+        },
+        "required": [
+          "collection",
+          "analyzer"
+        ],
+        "title": "Provenance",
+        "type": "object"
+      },
+      "RedirectData": {
+        "additionalProperties": false,
+        "properties": {
+          "chain": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 5,
+            "title": "Chain",
+            "type": "array"
+          },
+          "cross_domain_hops": {
+            "default": 0,
+            "maximum": 4.0,
+            "minimum": 0.0,
+            "title": "Cross Domain Hops",
+            "type": "integer"
+          },
+          "limit_reached": {
+            "default": false,
+            "title": "Limit Reached",
+            "type": "boolean"
+          },
+          "loop_detected": {
+            "default": false,
+            "title": "Loop Detected",
+            "type": "boolean"
+          },
+          "ssrf_blocked": {
+            "default": false,
+            "title": "Ssrf Blocked",
+            "type": "boolean"
+          },
+          "untrusted_destination": {
+            "default": false,
+            "title": "Untrusted Destination",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "chain"
+        ],
+        "title": "RedirectData",
+        "type": "object"
+      },
+      "RedirectEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RedirectData"
+          },
+          "id": {
+            "maxLength": 64,
+            "pattern": "^[a-z]+:[0-9]+$",
+            "title": "Id",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "fixture",
+              "live",
+              "local"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "COMPLETE",
+              "INCOMPLETE",
+              "TIMEOUT",
+              "FAILED",
+              "UNCONFIGURED"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "type": {
+            "const": "redirect",
+            "default": "redirect",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "mode",
+          "data"
+        ],
+        "title": "RedirectEvidence",
+        "type": "object"
+      },
+      "RiskClass": {
+        "enum": [
+          "LOW_RISK",
+          "SUSPICIOUS",
+          "HIGH_RISK",
+          "CONFIRMED_MALICIOUS",
+          "INCONCLUSIVE"
+        ],
+        "title": "RiskClass",
+        "type": "string"
+      },
+      "SocialIndicator": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_ids": {
+            "items": {
+              "maxLength": 64,
+              "pattern": "^[a-z]+:[0-9]+$",
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Evidence Ids",
+            "type": "array"
+          },
+          "type": {
+            "maxLength": 80,
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "evidence_ids"
+        ],
+        "title": "SocialIndicator",
+        "type": "object"
+      },
+      "TLSData": {
+        "additionalProperties": false,
+        "properties": {
+          "cert_sha256": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cert Sha256"
+          },
+          "expired": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expired"
+          },
+          "hostname_ok": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hostname Ok"
+          },
+          "issuer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issuer"
+          },
+          "not_after": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Not After"
+          },
+          "not_before": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Not Before"
+          },
+          "self_signed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Self Signed"
+          },
+          "trusted": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trusted"
+          }
+        },
+        "title": "TLSData",
+        "type": "object"
+      },
+      "TLSEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TLSData"
+          },
+          "id": {
+            "maxLength": 64,
+            "pattern": "^[a-z]+:[0-9]+$",
+            "title": "Id",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "fixture",
+              "live",
+              "local"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "COMPLETE",
+              "INCOMPLETE",
+              "TIMEOUT",
+              "FAILED",
+              "UNCONFIGURED"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "type": {
+            "const": "tls",
+            "default": "tls",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "mode",
+          "data"
+        ],
+        "title": "TLSEvidence",
+        "type": "object"
+      },
+      "TamperRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_id": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Id"
+          },
+          "mutation": {
+            "enum": [
+              "tls_cert",
+              "drop_threat_intel",
+              "alter_redirect",
+              "unground_ai_claim"
+            ],
+            "title": "Mutation",
+            "type": "string"
+          }
+        },
+        "required": [
+          "mutation"
+        ],
+        "title": "TamperRequest",
+        "type": "object"
+      },
+      "TamperResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "computed_root": {
+            "pattern": "^0x[0-9a-f]{64}$",
+            "title": "Computed Root",
+            "type": "string"
+          },
+          "expected_root": {
+            "pattern": "^0x[0-9a-f]{64}$",
+            "title": "Expected Root",
+            "type": "string"
+          },
+          "mutated_bundle": {
+            "$ref": "#/components/schemas/EvidenceBundle-Output"
+          },
+          "mutated_merkle": {
+            "$ref": "#/components/schemas/MerkleReport"
+          },
+          "tampered_leaf_id": {
+            "title": "Tampered Leaf Id",
+            "type": "string"
+          },
+          "verification": {
+            "$ref": "#/components/schemas/VerificationResponse"
+          }
+        },
+        "required": [
+          "mutated_bundle",
+          "mutated_merkle",
+          "verification",
+          "tampered_leaf_id",
+          "expected_root",
+          "computed_root"
+        ],
+        "title": "TamperResponse",
+        "type": "object"
+      },
+      "ThreatData": {
+        "additionalProperties": false,
+        "properties": {
+          "matched": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched"
+          },
+          "provider": {
+            "enum": [
+              "openphish",
+              "google_safe_browsing"
+            ],
+            "title": "Provider",
+            "type": "string"
+          },
+          "queried_at": {
+            "title": "Queried At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider",
+          "queried_at"
+        ],
+        "title": "ThreatData",
+        "type": "object"
+      },
+      "ThreatEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ThreatData"
+          },
+          "id": {
+            "maxLength": 64,
+            "pattern": "^[a-z]+:[0-9]+$",
+            "title": "Id",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "fixture",
+              "live",
+              "local"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "COMPLETE",
+              "INCOMPLETE",
+              "TIMEOUT",
+              "FAILED",
+              "UNCONFIGURED"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "type": {
+            "const": "threat_intel",
+            "default": "threat_intel",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "mode",
+          "data"
+        ],
+        "title": "ThreatEvidence",
+        "type": "object"
+      },
+      "URLData": {
+        "additionalProperties": false,
+        "properties": {
+          "brand_impersonation": {
+            "default": false,
+            "title": "Brand Impersonation",
+            "type": "boolean"
+          },
+          "confirmed_impersonation": {
+            "default": false,
+            "title": "Confirmed Impersonation",
+            "type": "boolean"
+          },
+          "homograph_detected": {
+            "default": false,
+            "title": "Homograph Detected",
+            "type": "boolean"
+          },
+          "hostname": {
+            "title": "Hostname",
+            "type": "string"
+          },
+          "normalized_url": {
+            "title": "Normalized Url",
+            "type": "string"
+          },
+          "obfuscated": {
+            "default": false,
+            "title": "Obfuscated",
+            "type": "boolean"
+          },
+          "suspicious_tld": {
+            "default": false,
+            "title": "Suspicious Tld",
+            "type": "boolean"
+          },
+          "typosquat_target": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Typosquat Target"
+          }
+        },
+        "required": [
+          "normalized_url",
+          "hostname"
+        ],
+        "title": "URLData",
+        "type": "object"
+      },
+      "URLEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/URLData"
+          },
+          "id": {
+            "maxLength": 64,
+            "pattern": "^[a-z]+:[0-9]+$",
+            "title": "Id",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "fixture",
+              "live",
+              "local"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "COMPLETE",
+              "INCOMPLETE",
+              "TIMEOUT",
+              "FAILED",
+              "UNCONFIGURED"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "type": {
+            "const": "url",
+            "default": "url",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "mode",
+          "data"
+        ],
+        "title": "URLEvidence",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "VerificationFailure": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "leaf_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leaf Id"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "title": "VerificationFailure",
+        "type": "object"
+      },
+      "VerificationResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "claim_grounding": {
+            "title": "Claim Grounding",
+            "type": "boolean"
+          },
+          "computed_root": {
+            "pattern": "^0x[0-9a-f]{64}$",
+            "title": "Computed Root",
+            "type": "string"
+          },
+          "expected_root": {
+            "pattern": "^0x[0-9a-f]{64}$",
+            "title": "Expected Root",
+            "type": "string"
+          },
+          "failures": {
+            "items": {
+              "$ref": "#/components/schemas/VerificationFailure"
+            },
+            "title": "Failures",
+            "type": "array"
+          },
+          "leaf_validity": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "title": "Leaf Validity",
+            "type": "object"
+          },
+          "report_id": {
+            "pattern": "^0x[0-9a-f]{64}$",
+            "title": "Report Id",
+            "type": "string"
+          },
+          "root_match": {
+            "title": "Root Match",
+            "type": "boolean"
+          },
+          "schema_match": {
+            "title": "Schema Match",
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "SUPPORTED",
+              "TAMPERED",
+              "NOT_SUPPORTED"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "target_leaf_valid": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Leaf Valid"
+          }
+        },
+        "required": [
+          "status",
+          "report_id",
+          "expected_root",
+          "computed_root",
+          "root_match",
+          "target_leaf_valid",
+          "claim_grounding",
+          "schema_match",
+          "failures",
+          "leaf_validity"
+        ],
+        "title": "VerificationResponse",
+        "type": "object"
+      },
+      "VerifyRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_bundle": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EvidenceBundle-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_id": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Id"
+          }
+        },
+        "title": "VerifyRequest",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "VERIDICT Evidence Passport API",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/fixtures": {
+      "get": {
+        "operationId": "fixtures_api_fixtures_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FixtureMetadata"
+                  },
+                  "title": "Response Fixtures Api Fixtures Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Fixtures"
+      }
+    },
+    "/api/investigate": {
+      "post": {
+        "operationId": "investigate_route_api_investigate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvestigateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationReport"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Investigate Route"
+      }
+    },
+    "/api/reports/{report_id}": {
+      "get": {
+        "operationId": "report_route_api_reports__report_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationReport"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report Route"
+      }
+    },
+    "/api/reports/{report_id}/tamper-demo": {
+      "post": {
+        "operationId": "tamper_route_api_reports__report_id__tamper_demo_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TamperRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TamperResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Tamper Route"
+      }
+    },
+    "/api/reports/{report_id}/verify": {
+      "post": {
+        "operationId": "verify_route_api_reports__report_id__verify_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Verify Route"
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    }
+  }
+}

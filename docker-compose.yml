@@ -1,0 +1,56 @@
+services:
+  chain:
+    build:
+      context: .
+      dockerfile: contracts/Dockerfile
+    ports: ["127.0.0.1:8545:8545"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8545',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_chainId',params:[]})}).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  deploy:
+    build:
+      context: .
+      dockerfile: contracts/Dockerfile
+    command: ["npm", "run", "deploy"]
+    environment:
+      RPC_URL: http://chain:8545
+      DEPLOYMENT_PATH: /runtime/deployment.json
+    volumes: ["runtime:/runtime"]
+    depends_on:
+      chain: {condition: service_healthy}
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      CHAIN_MODE: evm
+      RPC_URL: http://chain:8545
+      DEPLOYMENT_PATH: /runtime/deployment.json
+      DATABASE_PATH: /runtime/veridict.db
+      LIVE_CHECKS: ${LIVE_CHECKS:-false}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+      GOOGLE_SAFE_BROWSING_KEY: ${GOOGLE_SAFE_BROWSING_KEY:-}
+      OPENPHISH_CACHE_PATH: /runtime/openphish.txt
+    volumes: ["runtime:/runtime"]
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on:
+      deploy: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    environment:
+      BACKEND_URL: http://backend:8000
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on:
+      backend: {condition: service_healthy}
+volumes:
+  runtime:

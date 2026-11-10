@@ -1,0 +1,21 @@
+[project]
+name = "veridict-backend"
+version = "1.0.0"
+description = "Evidence-constrained security investigation and independent integrity verification"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+  "fastapi>=0.115,<1", "uvicorn>=0.34,<1", "pydantic>=2.10,<3",
+  "httpx>=0.28,<0.29", "httpcore>=1.0,<2", "anyio>=4.8,<5",
+  "cryptography>=44", "dnspython>=2.7,<3", "idna>=3.10,<4",
+  "eth-abi>=5,<6", "eth-utils>=5,<6", "web3>=7,<8",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-asyncio>=0.25,<2"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+filterwarnings = ["ignore:.*schema.*shadows.*:UserWarning"]

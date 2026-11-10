@@ -19,12 +19,13 @@
       "expired": false,
       "self_signed": false,
       "issuer": "DigiCert Global G2 TLS RSA SHA256 2020 CA1",
-      "cert_sha256": "55b8f12e3d4c5b6a7980123456789abcdef012345678a94f3c1e72b8501c2d9a"
+      "cert_sha256": "4cbdc9ff7dacbfa8907f942cc8efebf751f5781255e9ca4ae98bea5900030896",
+      "trusted": true
     },
     "threat_intel": {
       "status": "TIMEOUT",
       "provider": "openphish",
-      "matched": false,
+      "matched": null,
       "queried_at": "2026-11-10T12:00:00Z"
     },
     "redirects": {

@@ -1,0 +1,35 @@
+name: Verify VERIDICT
+on: [push, pull_request]
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '24'}
+      - uses: astral-sh/setup-uv@v6
+        with: {python-version: '3.12'}
+      - uses: pnpm/action-setup@v4
+        with: {version: '11.24.0'}
+      - run: npm ci --prefix contracts
+      - run: npm --prefix contracts test
+      - run: uv sync --frozen
+        working-directory: backend
+      - run: uv run pytest
+        working-directory: backend
+      - run: pnpm --dir frontend install --frozen-lockfile
+      - run: uv run python scripts/export_openapi.py --check
+        working-directory: backend
+      - run: pnpm --dir frontend schema:check
+      - run: pnpm --dir frontend typecheck
+      - run: pnpm --dir frontend lint
+      - run: pnpm --dir frontend build
+      - run: pnpm --dir frontend exec playwright install --with-deps chromium
+      - run: pnpm --dir frontend test:e2e
+      - run: docker compose up --build -d --wait
+      - run: uv run python scripts/rehearse.py --url http://localhost:8000 --require-evm
+        working-directory: backend
+      - if: always()
+        run: docker compose logs --tail=100
+      - if: always()
+        run: docker compose down

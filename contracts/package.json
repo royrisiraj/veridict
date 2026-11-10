@@ -1,0 +1,21 @@
+{
+  "name": "veridict-contracts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "hardhat test",
+    "node": "hardhat node --hostname 0.0.0.0",
+    "deploy": "hardhat run scripts/deploy.ts --network localhost"
+  },
+  "overrides": {
+    "solc": { "tmp": "0.2.7" },
+    "serialize-javascript": "^7.1.3"
+  },
+  "devDependencies": {
+    "hardhat": "^3.0.0",
+    "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "solc": "0.8.38",
+    "typescript": "^5.9.0"
+  }
+}

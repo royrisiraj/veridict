@@ -11,3 +11,14 @@ __pycache__/
 
 contracts/cache/
 contracts/artifacts/
+contracts/types/
+.tools/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage/
+frontend/test-results/
+frontend/playwright-report/
+frontend/tsconfig.tsbuildinfo
+runtime/
+.env.local

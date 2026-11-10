@@ -74,3 +74,17 @@ def test_tampered_leaf_breaks_verification_while_siblings_remain_valid():
     # Unaltered leaves MUST still verify against anchored root
     assert verify_leaf(tree.root, leaves[1], tree.proofs[1]) is True
     assert verify_leaf(tree.root, leaves[2], tree.proofs[2]) is True
+
+
+@pytest.mark.parametrize("bad", ["0xzz", "0x" + "g" * 64, "0x1234", "", None, 17])
+def test_invalid_hex_returns_false(bad):
+    good = leaf_hash("x", {"id": "ev:1"})
+    assert verify_leaf(bad, good, []) is False
+    assert verify_leaf(good, good, [bad]) is False
+
+
+def test_hex_case_normalization_and_altered_proof():
+    leaves = [leaf_hash("x", {"id": str(i)}) for i in range(3)]
+    tree = build_merkle(leaves)
+    assert verify_leaf(tree.root_hex.upper(), tree.leaves_hex[0].upper(), [p.upper() for p in tree.proofs_hex[0]])
+    assert not verify_leaf(tree.root, leaves[0], [b"\x00" * 32])

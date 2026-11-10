@@ -1,5 +1,8 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { network } from "hardhat";
+import { readFileSync } from "node:fs";
+
+const { ethers } = await network.connect();
 
 describe("EvidenceRegistry", function () {
   const REPORT_ID = ethers.keccak256(ethers.toUtf8Bytes("report:suspicious-1"));
@@ -41,5 +44,35 @@ describe("EvidenceRegistry", function () {
     await expect(
       registry.register(REPORT_ID, ZERO_BYTES32, SCHEMA_HASH)
     ).to.be.revertedWithCustomError(registry, "InvalidRoot");
+  });
+
+  it("does not verify an unknown report", async function () {
+    const registry = await ethers.deployContract("EvidenceRegistry");
+    expect(await registry.verifyRoot(REPORT_ID, MERKLE_ROOT)).to.equal(false);
+  });
+
+  it("emits the exact stored registration fields", async function () {
+    const registry = await ethers.deployContract("EvidenceRegistry");
+    const tx = await registry.register(REPORT_ID, MERKLE_ROOT, SCHEMA_HASH);
+    const receipt = await tx.wait();
+    const block = await ethers.provider.getBlock(receipt!.blockNumber);
+    await expect(tx).to.emit(registry, "Registered")
+      .withArgs(REPORT_ID, MERKLE_ROOT, SCHEMA_HASH, BigInt(block!.timestamp));
+  });
+
+  it("verifies Python canonical leaves and odd/even proofs with OpenZeppelin", async function () {
+    const harness = await ethers.deployContract("MerkleProofHarness");
+    const vectors = JSON.parse(readFileSync(new URL("./merkle-vectors.json", import.meta.url), "utf8"));
+    for (const vector of vectors) {
+      for (let index = 0; index < vector.leaves.length; index++) {
+        const item = vector.leaves[index];
+        const typed = ethers.keccak256(ethers.AbiCoder.defaultAbiCoder().encode(
+          ["bytes32", "bytes32"], [ethers.id(item.type), ethers.keccak256(ethers.toUtf8Bytes(item.canonical))],
+        ));
+        expect(typed).to.equal(item.hash);
+        expect(await harness.verify(vector.proofs[index], vector.root, typed)).to.equal(true);
+        expect(await harness.verify(vector.proofs[index], vector.root, ethers.ZeroHash)).to.equal(false);
+      }
+    }
   });
 });

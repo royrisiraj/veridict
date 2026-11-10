@@ -1,0 +1,29 @@
+{
+  "name": "veridict-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.24.0",
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "node scripts/start-frontend.mjs",
+    "typecheck": "next typegen && tsc --noEmit",
+    "lint": "eslint .",
+    "schema:generate": "openapi-typescript openapi.json -o lib/api.generated.ts",
+    "schema:check": "node scripts/check-schema.mjs",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "next": "~16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "lucide-react": "^0.577.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0", "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0", "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0", "eslint-config-next": "~16.4.0",
+    "tailwindcss": "^4.0.0", "@tailwindcss/postcss": "^4.0.0",
+    "openapi-typescript": "^7.0.0", "@playwright/test": "^1.58.0"
+  }
+}
