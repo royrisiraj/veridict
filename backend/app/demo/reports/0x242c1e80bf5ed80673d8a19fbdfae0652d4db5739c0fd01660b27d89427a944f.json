@@ -1,0 +1,709 @@
+{
+  "bundle": {
+    "ai_claims": [
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "url:1"
+        ],
+        "id": "claim:1",
+        "text": "A protected-domain impersonation indicator was detected."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "tls:1"
+        ],
+        "id": "claim:2",
+        "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "ti:1"
+        ],
+        "id": "claim:3",
+        "text": "No match was found in the cited threat feed; this does not establish safety."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "redir:1"
+        ],
+        "id": "claim:4",
+        "text": "Redirect inspection recorded 0 cross-domain transitions."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:1"
+        ],
+        "id": "claim:5",
+        "text": "Message pattern detected: urgency."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:2"
+        ],
+        "id": "claim:6",
+        "text": "Message pattern detected: urgency."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:3"
+        ],
+        "id": "claim:7",
+        "text": "Message pattern detected: credential harvesting."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:4"
+        ],
+        "id": "claim:8",
+        "text": "Message pattern detected: otp request."
+      }
+    ],
+    "coverage": {
+      "redirects": "COMPLETE",
+      "threat_intel": "COMPLETE",
+      "tls": "COMPLETE",
+      "url": "COMPLETE"
+    },
+    "created_at": "2026-11-10T12:00:00Z",
+    "evidence": [
+      {
+        "data": {
+          "brand_impersonation": true,
+          "confirmed_impersonation": true,
+          "homograph_detected": true,
+          "hostname": "secure-examplebank-login.top",
+          "normalized_url": "https://secure-examplebank-login.top/verify",
+          "obfuscated": false,
+          "suspicious_tld": true,
+          "typosquat_target": "examplebank.com"
+        },
+        "id": "url:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "url"
+      },
+      {
+        "data": {
+          "end": 6,
+          "pattern_type": "urgency",
+          "redacted_excerpt": "URGENT: ExampleBank security requires your password and OTP immediately.",
+          "sha256": "ee603f0d79655e1c9c94a8c5923a8528214b779dbc88c09b3a6bff9e1ba318cb",
+          "start": 0
+        },
+        "id": "msg:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "end": 71,
+          "pattern_type": "urgency",
+          "redacted_excerpt": "URGENT: ExampleBank security requires your password and OTP immediately.",
+          "sha256": "d978e0e487928a68d48323006a8eca6e4925b3ea7e8ed50b326325668c93b2ac",
+          "start": 60
+        },
+        "id": "msg:2",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "end": 51,
+          "pattern_type": "credential_harvesting",
+          "redacted_excerpt": "URGENT: ExampleBank security requires your password and OTP immediately.",
+          "sha256": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+          "start": 43
+        },
+        "id": "msg:3",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "end": 59,
+          "pattern_type": "otp_request",
+          "redacted_excerpt": "URGENT: ExampleBank security requires your password and OTP immediately.",
+          "sha256": "6c0e6acd356946221aa697cb0113f7e2d242a8aa4ef9ee37cbd5d23aa6646efe",
+          "start": 56
+        },
+        "id": "msg:4",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "chain": [
+            "https://secure-examplebank-login.top/verify"
+          ],
+          "cross_domain_hops": 0,
+          "limit_reached": false,
+          "loop_detected": false,
+          "ssrf_blocked": false,
+          "untrusted_destination": false
+        },
+        "id": "redir:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "redirect"
+      },
+      {
+        "data": {
+          "cert_sha256": "7613c47619eb6a23f1c78550423ff5f978d494cd11ea7c0353d86c5f4431ce80",
+          "expired": false,
+          "hostname_ok": false,
+          "issuer": "Untrusted Demo CA",
+          "not_after": null,
+          "not_before": null,
+          "self_signed": true,
+          "trusted": false
+        },
+        "id": "tls:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "tls"
+      },
+      {
+        "data": {
+          "matched": false,
+          "provider": "openphish",
+          "queried_at": "2026-11-10T12:00:00Z"
+        },
+        "id": "ti:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "threat_intel"
+      }
+    ],
+    "limitations": [],
+    "normalized_url": "https://secure-examplebank-login.top/verify",
+    "provenance": {
+      "analyzer": "fixture",
+      "collection": "fixture",
+      "fixture_id": "suspicious-2"
+    },
+    "report_id": "0x242c1e80bf5ed80673d8a19fbdfae0652d4db5739c0fd01660b27d89427a944f",
+    "risk": "CONFIRMED_MALICIOUS",
+    "schema": "sealed-evidence/1",
+    "social_engineering_indicators": [
+      {
+        "evidence_ids": [
+          "msg:1"
+        ],
+        "type": "urgency"
+      },
+      {
+        "evidence_ids": [
+          "msg:2"
+        ],
+        "type": "urgency"
+      },
+      {
+        "evidence_ids": [
+          "msg:3"
+        ],
+        "type": "credential_harvesting"
+      },
+      {
+        "evidence_ids": [
+          "msg:4"
+        ],
+        "type": "otp_request"
+      }
+    ]
+  },
+  "chain_receipt": {
+    "block_number": null,
+    "contract_address": null,
+    "mode": "fixture",
+    "network": "fixture-sealed-assets",
+    "tx_hash": null
+  },
+  "merkle": {
+    "leaves": [
+      {
+        "hash": "0x5f3ff6750e62efb8c56234ba428d77b1bc45465c1282fce75543c5ffdcc6e1ba",
+        "id": "msg:1",
+        "payload": {
+          "data": {
+            "end": 6,
+            "pattern_type": "urgency",
+            "redacted_excerpt": "URGENT: ExampleBank security requires your password and OTP immediately.",
+            "sha256": "ee603f0d79655e1c9c94a8c5923a8528214b779dbc88c09b3a6bff9e1ba318cb",
+            "start": 0
+          },
+          "id": "msg:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0xbea25fbc1d3a8e4d16db627bee1e20c737c30c51a0afc7209d7ac50a11d54cba",
+        "id": "msg:2",
+        "payload": {
+          "data": {
+            "end": 71,
+            "pattern_type": "urgency",
+            "redacted_excerpt": "URGENT: ExampleBank security requires your password and OTP immediately.",
+            "sha256": "d978e0e487928a68d48323006a8eca6e4925b3ea7e8ed50b326325668c93b2ac",
+            "start": 60
+          },
+          "id": "msg:2",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0xb6b752177fbbef2d9cfdea006f6eb71eecafceb1cd29ccca782dd58d34333b34",
+        "id": "msg:3",
+        "payload": {
+          "data": {
+            "end": 51,
+            "pattern_type": "credential_harvesting",
+            "redacted_excerpt": "URGENT: ExampleBank security requires your password and OTP immediately.",
+            "sha256": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+            "start": 43
+          },
+          "id": "msg:3",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0xe50c19f599bf855df7845a85622616f53218a0aafcbf7692b4ccc46d456a733e",
+        "id": "msg:4",
+        "payload": {
+          "data": {
+            "end": 59,
+            "pattern_type": "otp_request",
+            "redacted_excerpt": "URGENT: ExampleBank security requires your password and OTP immediately.",
+            "sha256": "6c0e6acd356946221aa697cb0113f7e2d242a8aa4ef9ee37cbd5d23aa6646efe",
+            "start": 56
+          },
+          "id": "msg:4",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0x53d1cd46629fb56a8e3353f2c135953bacecb07a736f5e62f02d72bbbd202b92",
+        "id": "redir:1",
+        "payload": {
+          "data": {
+            "chain": [
+              "https://secure-examplebank-login.top/verify"
+            ],
+            "cross_domain_hops": 0,
+            "limit_reached": false,
+            "loop_detected": false,
+            "ssrf_blocked": false,
+            "untrusted_destination": false
+          },
+          "id": "redir:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "redirect"
+        },
+        "type": "redirect"
+      },
+      {
+        "hash": "0xfe5d8f65f68f87ff68d8cbdbbcf38a5d3dc1bbaba3c66c46c1bf357aaba19388",
+        "id": "ti:1",
+        "payload": {
+          "data": {
+            "matched": false,
+            "provider": "openphish",
+            "queried_at": "2026-11-10T12:00:00Z"
+          },
+          "id": "ti:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "threat_intel"
+        },
+        "type": "threat_intel"
+      },
+      {
+        "hash": "0x67f8d9b6f4b1e75a46bcad1b36e732658dba6c2a2eb4ed4c7dd4aae63f5ec664",
+        "id": "tls:1",
+        "payload": {
+          "data": {
+            "cert_sha256": "7613c47619eb6a23f1c78550423ff5f978d494cd11ea7c0353d86c5f4431ce80",
+            "expired": false,
+            "hostname_ok": false,
+            "issuer": "Untrusted Demo CA",
+            "not_after": null,
+            "not_before": null,
+            "self_signed": true,
+            "trusted": false
+          },
+          "id": "tls:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "tls"
+        },
+        "type": "tls"
+      },
+      {
+        "hash": "0xaee087c3af5388ab497decb5daba22c3648b55dd14d74c840718b7cd68d34a73",
+        "id": "url:1",
+        "payload": {
+          "data": {
+            "brand_impersonation": true,
+            "confirmed_impersonation": true,
+            "homograph_detected": true,
+            "hostname": "secure-examplebank-login.top",
+            "normalized_url": "https://secure-examplebank-login.top/verify",
+            "obfuscated": false,
+            "suspicious_tld": true,
+            "typosquat_target": "examplebank.com"
+          },
+          "id": "url:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "url"
+        },
+        "type": "url"
+      },
+      {
+        "hash": "0x69f8e5c2274911d90f44ff1c5264e435becb45f312d3c53aa49ef74d6fcd3547",
+        "id": "claim:1",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "url:1"
+          ],
+          "id": "claim:1",
+          "text": "A protected-domain impersonation indicator was detected."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "id": "claim:2",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "tls:1"
+          ],
+          "id": "claim:2",
+          "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xafb167a994e5d1dbd1596f4eff504de94e319dc4677439257f4dd7466f246462",
+        "id": "claim:3",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "ti:1"
+          ],
+          "id": "claim:3",
+          "text": "No match was found in the cited threat feed; this does not establish safety."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "id": "claim:4",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "redir:1"
+          ],
+          "id": "claim:4",
+          "text": "Redirect inspection recorded 0 cross-domain transitions."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xc5eeb6b5769193f1090a6fa2e6e6b0887d19de5e3c798ca1941c88651ca2a1d8",
+        "id": "claim:5",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:1"
+          ],
+          "id": "claim:5",
+          "text": "Message pattern detected: urgency."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xa235e59b7f30606654ff52f259cd191824cab15373e9957ad002b9356fbe1459",
+        "id": "claim:6",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:2"
+          ],
+          "id": "claim:6",
+          "text": "Message pattern detected: urgency."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xbf96bb753e5e7086c63220c9c3534e192cd6d5eba29ad8f900f5ba1901fac399",
+        "id": "claim:7",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:3"
+          ],
+          "id": "claim:7",
+          "text": "Message pattern detected: credential harvesting."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x987b963b05e52a5e7f0629605679216a041c20f36c193e08ffa3921d95499c50",
+        "id": "claim:8",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:4"
+          ],
+          "id": "claim:8",
+          "text": "Message pattern detected: otp request."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "id": "cov:1",
+        "payload": {
+          "data": {
+            "redirects": "COMPLETE",
+            "threat_intel": "COMPLETE",
+            "tls": "COMPLETE",
+            "url": "COMPLETE"
+          },
+          "id": "cov:1",
+          "type": "coverage"
+        },
+        "type": "coverage"
+      },
+      {
+        "hash": "0xd993df7a98a92c5403896ed82fa499e61220b5fcd224eadffff216a780af253c",
+        "id": "meta:1",
+        "payload": {
+          "data": {
+            "created_at": "2026-11-10T12:00:00Z",
+            "limitations": [],
+            "provenance": {
+              "analyzer": "fixture",
+              "collection": "fixture",
+              "fixture_id": "suspicious-2"
+            },
+            "redacted_url": "https://secure-examplebank-login.top/verify",
+            "report_id": "0x242c1e80bf5ed80673d8a19fbdfae0652d4db5739c0fd01660b27d89427a944f",
+            "risk": "CONFIRMED_MALICIOUS",
+            "schema": "sealed-evidence/1",
+            "social_engineering_indicators": [
+              {
+                "evidence_ids": [
+                  "msg:1"
+                ],
+                "type": "urgency"
+              },
+              {
+                "evidence_ids": [
+                  "msg:2"
+                ],
+                "type": "urgency"
+              },
+              {
+                "evidence_ids": [
+                  "msg:3"
+                ],
+                "type": "credential_harvesting"
+              },
+              {
+                "evidence_ids": [
+                  "msg:4"
+                ],
+                "type": "otp_request"
+              }
+            ]
+          },
+          "id": "meta:1",
+          "type": "meta"
+        },
+        "type": "meta"
+      }
+    ],
+    "proofs_by_id": {
+      "claim:1": [
+        "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "0xddaee05c2b3a01bb86e17002073cee47c953fb4207794d4f6f4690eb3a2c2c40",
+        "0x087cca19c6c452ec267bd8970bf02ff7ac7ef8af90a1af8f6a1d6eed6b498ca2",
+        "0x81b476d990746ca2c68a8bbdfab8b32919d4a8fe637071067901efc78f6f9845",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "claim:2": [
+        "0x69f8e5c2274911d90f44ff1c5264e435becb45f312d3c53aa49ef74d6fcd3547",
+        "0xddaee05c2b3a01bb86e17002073cee47c953fb4207794d4f6f4690eb3a2c2c40",
+        "0x087cca19c6c452ec267bd8970bf02ff7ac7ef8af90a1af8f6a1d6eed6b498ca2",
+        "0x81b476d990746ca2c68a8bbdfab8b32919d4a8fe637071067901efc78f6f9845",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "claim:3": [
+        "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "0x5b8f0618320460474bda994d02a77f16f26f97c2c2fcb9b2aba9c0198bb10bf2",
+        "0x087cca19c6c452ec267bd8970bf02ff7ac7ef8af90a1af8f6a1d6eed6b498ca2",
+        "0x81b476d990746ca2c68a8bbdfab8b32919d4a8fe637071067901efc78f6f9845",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "claim:4": [
+        "0xafb167a994e5d1dbd1596f4eff504de94e319dc4677439257f4dd7466f246462",
+        "0x5b8f0618320460474bda994d02a77f16f26f97c2c2fcb9b2aba9c0198bb10bf2",
+        "0x087cca19c6c452ec267bd8970bf02ff7ac7ef8af90a1af8f6a1d6eed6b498ca2",
+        "0x81b476d990746ca2c68a8bbdfab8b32919d4a8fe637071067901efc78f6f9845",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "claim:5": [
+        "0xa235e59b7f30606654ff52f259cd191824cab15373e9957ad002b9356fbe1459",
+        "0x6cb18135f850aac6d32002319f2d94501e7c2bec1a6991b86d9fb52d44c2abc1",
+        "0xba259ddd18ea2d07dc4584714de5a2e2c766a1729a08b75db1512e100675cac5",
+        "0x81b476d990746ca2c68a8bbdfab8b32919d4a8fe637071067901efc78f6f9845",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "claim:6": [
+        "0xc5eeb6b5769193f1090a6fa2e6e6b0887d19de5e3c798ca1941c88651ca2a1d8",
+        "0x6cb18135f850aac6d32002319f2d94501e7c2bec1a6991b86d9fb52d44c2abc1",
+        "0xba259ddd18ea2d07dc4584714de5a2e2c766a1729a08b75db1512e100675cac5",
+        "0x81b476d990746ca2c68a8bbdfab8b32919d4a8fe637071067901efc78f6f9845",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "claim:7": [
+        "0x987b963b05e52a5e7f0629605679216a041c20f36c193e08ffa3921d95499c50",
+        "0x6e9655c8375d73614e96637c6f92a0235f9a404284a4309ff0ee6ef37f04a930",
+        "0xba259ddd18ea2d07dc4584714de5a2e2c766a1729a08b75db1512e100675cac5",
+        "0x81b476d990746ca2c68a8bbdfab8b32919d4a8fe637071067901efc78f6f9845",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "claim:8": [
+        "0xbf96bb753e5e7086c63220c9c3534e192cd6d5eba29ad8f900f5ba1901fac399",
+        "0x6e9655c8375d73614e96637c6f92a0235f9a404284a4309ff0ee6ef37f04a930",
+        "0xba259ddd18ea2d07dc4584714de5a2e2c766a1729a08b75db1512e100675cac5",
+        "0x81b476d990746ca2c68a8bbdfab8b32919d4a8fe637071067901efc78f6f9845",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "cov:1": [
+        "0xd993df7a98a92c5403896ed82fa499e61220b5fcd224eadffff216a780af253c",
+        "0x0c0601a3b201417f6af438d58eed7c913297f8d649b70cff14cbc3fda3de9021"
+      ],
+      "meta:1": [
+        "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "0x0c0601a3b201417f6af438d58eed7c913297f8d649b70cff14cbc3fda3de9021"
+      ],
+      "msg:1": [
+        "0xbea25fbc1d3a8e4d16db627bee1e20c737c30c51a0afc7209d7ac50a11d54cba",
+        "0xf832de781db51506629781b989166855eff12c61b10401f30b94067376243e1f",
+        "0xb9a6329f9ee31a49765f8aa17bbd9a659bd04ccf3a3e0afa69a8e0546090a905",
+        "0x2a238638bd6f6d85fefaed4f94592a3b51dd2d0fd23982bd8d54246b4f7c6293",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "msg:2": [
+        "0x5f3ff6750e62efb8c56234ba428d77b1bc45465c1282fce75543c5ffdcc6e1ba",
+        "0xf832de781db51506629781b989166855eff12c61b10401f30b94067376243e1f",
+        "0xb9a6329f9ee31a49765f8aa17bbd9a659bd04ccf3a3e0afa69a8e0546090a905",
+        "0x2a238638bd6f6d85fefaed4f94592a3b51dd2d0fd23982bd8d54246b4f7c6293",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "msg:3": [
+        "0xe50c19f599bf855df7845a85622616f53218a0aafcbf7692b4ccc46d456a733e",
+        "0x57d237f53f3b8593f69f2ad952928848defc787519f73be723222d229b97be6b",
+        "0xb9a6329f9ee31a49765f8aa17bbd9a659bd04ccf3a3e0afa69a8e0546090a905",
+        "0x2a238638bd6f6d85fefaed4f94592a3b51dd2d0fd23982bd8d54246b4f7c6293",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "msg:4": [
+        "0xb6b752177fbbef2d9cfdea006f6eb71eecafceb1cd29ccca782dd58d34333b34",
+        "0x57d237f53f3b8593f69f2ad952928848defc787519f73be723222d229b97be6b",
+        "0xb9a6329f9ee31a49765f8aa17bbd9a659bd04ccf3a3e0afa69a8e0546090a905",
+        "0x2a238638bd6f6d85fefaed4f94592a3b51dd2d0fd23982bd8d54246b4f7c6293",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "redir:1": [
+        "0xfe5d8f65f68f87ff68d8cbdbbcf38a5d3dc1bbaba3c66c46c1bf357aaba19388",
+        "0xe14be23de27a3180146687105ca7e67b0d26bc49b780c1d1547a572c014b05dc",
+        "0xf7bb2ea2201986f68cce801ace4da18570a35b6e8674c29a6dfc6975eae42346",
+        "0x2a238638bd6f6d85fefaed4f94592a3b51dd2d0fd23982bd8d54246b4f7c6293",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "ti:1": [
+        "0x53d1cd46629fb56a8e3353f2c135953bacecb07a736f5e62f02d72bbbd202b92",
+        "0xe14be23de27a3180146687105ca7e67b0d26bc49b780c1d1547a572c014b05dc",
+        "0xf7bb2ea2201986f68cce801ace4da18570a35b6e8674c29a6dfc6975eae42346",
+        "0x2a238638bd6f6d85fefaed4f94592a3b51dd2d0fd23982bd8d54246b4f7c6293",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "tls:1": [
+        "0xaee087c3af5388ab497decb5daba22c3648b55dd14d74c840718b7cd68d34a73",
+        "0x890a0a591657133eeda6d7525efccad551be171fbb70f5d665bcbe5ec2aa3c47",
+        "0xf7bb2ea2201986f68cce801ace4da18570a35b6e8674c29a6dfc6975eae42346",
+        "0x2a238638bd6f6d85fefaed4f94592a3b51dd2d0fd23982bd8d54246b4f7c6293",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ],
+      "url:1": [
+        "0x67f8d9b6f4b1e75a46bcad1b36e732658dba6c2a2eb4ed4c7dd4aae63f5ec664",
+        "0x890a0a591657133eeda6d7525efccad551be171fbb70f5d665bcbe5ec2aa3c47",
+        "0xf7bb2ea2201986f68cce801ace4da18570a35b6e8674c29a6dfc6975eae42346",
+        "0x2a238638bd6f6d85fefaed4f94592a3b51dd2d0fd23982bd8d54246b4f7c6293",
+        "0x8dddfc747b6ba429b6243fa83777e3a74731df295fd532841d333070df1fec3e"
+      ]
+    },
+    "root": "0x9f7ba32da18d05da12be8fc1e36e66ae19b9c087cd4bf2cf3223168fd13cb45a"
+  },
+  "verification": {
+    "claim_grounding": true,
+    "computed_root": "0x9f7ba32da18d05da12be8fc1e36e66ae19b9c087cd4bf2cf3223168fd13cb45a",
+    "expected_root": "0x9f7ba32da18d05da12be8fc1e36e66ae19b9c087cd4bf2cf3223168fd13cb45a",
+    "failures": [],
+    "leaf_validity": {
+      "claim:1": true,
+      "claim:2": true,
+      "claim:3": true,
+      "claim:4": true,
+      "claim:5": true,
+      "claim:6": true,
+      "claim:7": true,
+      "claim:8": true,
+      "cov:1": true,
+      "meta:1": true,
+      "msg:1": true,
+      "msg:2": true,
+      "msg:3": true,
+      "msg:4": true,
+      "redir:1": true,
+      "ti:1": true,
+      "tls:1": true,
+      "url:1": true
+    },
+    "report_id": "0x242c1e80bf5ed80673d8a19fbdfae0652d4db5739c0fd01660b27d89427a944f",
+    "root_match": true,
+    "schema_match": true,
+    "status": "SUPPORTED",
+    "target_leaf_valid": null
+  }
+}

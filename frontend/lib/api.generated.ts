@@ -238,15 +238,50 @@ export interface components {
              * Chain Mode
              * @enum {string}
              */
-            chain_mode: "evm" | "fixture";
+            chain_mode: "evm" | "fixture" | "unavailable";
             /** Contract Address */
             contract_address: string;
+            /**
+             * Live Scanning Enabled
+             * @default true
+             */
+            live_scanning_enabled: boolean;
+            /**
+             * Report Storage
+             * @default sqlite
+             * @enum {string}
+             */
+            report_storage: "sqlite" | "packaged-read-only";
+            /**
+             * Runtime Mode
+             * @default native
+             * @enum {string}
+             */
+            runtime_mode: "native" | "serverless";
+            /**
+             * Service
+             * @default veridict-api
+             * @constant
+             */
+            service: "veridict-api";
             /**
              * Status
              * @default ok
              * @constant
              */
             status: "ok";
+            /**
+             * Verification Mode
+             * @default LOCAL_DEVELOPMENT
+             * @enum {string}
+             */
+            verification_mode: "DEMO_FIXTURE" | "PUBLIC_CHAIN" | "LOCAL_DEVELOPMENT" | "UNAVAILABLE";
+            /**
+             * Version
+             * @default 1
+             * @constant
+             */
+            version: "1";
         };
         /** InvestigateRequest */
         InvestigateRequest: {

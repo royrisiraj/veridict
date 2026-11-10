@@ -3,6 +3,7 @@ import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from web3 import Web3
 from app.canonical import SCHEMA_HASH_HEX
@@ -64,11 +65,14 @@ class EVMRegistry:
             raise AnchorUnavailableError("Registry bytecode unavailable")
         self.contract = self.web3.eth.contract(address=self.address, abi=ABI)
         self.chain_id = self.web3.eth.chain_id
+        if settings.chain_id is not None and self.chain_id != settings.chain_id:
+            raise AnchorUnavailableError("Configured chain ID does not match RPC")
         self.key = settings.chain_private_key
         if not self.key and self.chain_id != 31337:
             raise AnchorUnavailableError("A signer is required outside local Hardhat")
         self.sender = self.web3.eth.account.from_key(self.key).address if self.key else self.web3.eth.accounts[0]
         self.lock = threading.Lock()
+        self.health_connected = True
 
     @property
     def connected(self):
@@ -100,17 +104,29 @@ class EVMRegistry:
             root, schema, timestamp = self.contract.functions.reports(bytes.fromhex(report_id[2:])).call()
             if not timestamp:
                 raise AnchorUnavailableError("Anchor is missing")
+            self.health_connected = True
             return Anchor("0x" + bytes(root).hex(), "0x" + bytes(schema).hex(), int(timestamp))
         except Exception:
+            self.health_connected = False
             raise AnchorUnavailableError("EVM anchor unavailable") from None
 
 
 def create_registry(settings: Settings):
+    if settings.chain_mode == "unavailable":
+        from app.deployment import UnavailableRegistry
+        return UnavailableRegistry()
+    if settings.chain_mode == "demo_fixture":
+        from app.deployment import FixtureRegistry
+        return FixtureRegistry()
     if settings.chain_mode == "fixture":
         return MemoryRegistry()
+    if settings.chain_mode == "public_chain":
+        parts = urlsplit(settings.rpc_url)
+        if parts.scheme != "https" or parts.hostname in {None, "localhost", "127.0.0.1", "::1"} or not settings.chain_id or settings.chain_id == 31337 or not settings.contract_address or not settings.chain_private_key:
+            raise AnchorUnavailableError("Public chain requires HTTPS RPC, expected CHAIN_ID, deployed contract and server-side signer")
     try:
         return EVMRegistry(settings)
     except Exception:
-        if settings.chain_mode == "evm":
+        if settings.chain_mode in {"evm", "public_chain"}:
             raise AnchorUnavailableError("Explicit EVM mode requires a deployed reachable registry") from None
         return MemoryRegistry()

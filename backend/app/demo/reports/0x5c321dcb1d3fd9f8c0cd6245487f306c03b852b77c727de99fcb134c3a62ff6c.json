@@ -1,0 +1,459 @@
+{
+  "bundle": {
+    "ai_claims": [
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "url:1"
+        ],
+        "id": "claim:1",
+        "text": "Local URL normalization completed; domain structure is recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "tls:1"
+        ],
+        "id": "claim:2",
+        "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "ti:1"
+        ],
+        "id": "claim:3",
+        "text": "No match was found in the cited threat feed; this does not establish safety."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "redir:1"
+        ],
+        "id": "claim:4",
+        "text": "Redirect inspection recorded 0 cross-domain transitions."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:1"
+        ],
+        "id": "claim:5",
+        "text": "Message pattern detected: urgency."
+      }
+    ],
+    "coverage": {
+      "redirects": "COMPLETE",
+      "threat_intel": "COMPLETE",
+      "tls": "COMPLETE",
+      "url": "COMPLETE"
+    },
+    "created_at": "2026-11-10T12:00:00Z",
+    "evidence": [
+      {
+        "data": {
+          "brand_impersonation": false,
+          "confirmed_impersonation": false,
+          "homograph_detected": false,
+          "hostname": "status.public-service.org",
+          "normalized_url": "https://status.public-service.org/maintenance",
+          "obfuscated": false,
+          "suspicious_tld": false,
+          "typosquat_target": null
+        },
+        "id": "url:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "url"
+      },
+      {
+        "data": {
+          "end": 15,
+          "pattern_type": "urgency",
+          "redacted_excerpt": "Action Required: Server Maintenance. Review the scheduled maintenance window.",
+          "sha256": "9346491a4a8503976d7aeda6626967b98a22f848d1ccd0e1653c46485d69bcf2",
+          "start": 0
+        },
+        "id": "msg:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "chain": [
+            "https://status.public-service.org/maintenance"
+          ],
+          "cross_domain_hops": 0,
+          "limit_reached": false,
+          "loop_detected": false,
+          "ssrf_blocked": false,
+          "untrusted_destination": false
+        },
+        "id": "redir:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "redirect"
+      },
+      {
+        "data": {
+          "cert_sha256": "29b37281ee00e0044f72b7e7e20eaa7b63d5e1a5483b3f8ff637c560486a375a",
+          "expired": false,
+          "hostname_ok": true,
+          "issuer": "Fixture Public CA",
+          "not_after": null,
+          "not_before": null,
+          "self_signed": false,
+          "trusted": true
+        },
+        "id": "tls:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "tls"
+      },
+      {
+        "data": {
+          "matched": false,
+          "provider": "openphish",
+          "queried_at": "2026-11-10T12:00:00Z"
+        },
+        "id": "ti:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "threat_intel"
+      }
+    ],
+    "limitations": [],
+    "normalized_url": "https://status.public-service.org/maintenance",
+    "provenance": {
+      "analyzer": "fixture",
+      "collection": "fixture",
+      "fixture_id": "benign-2"
+    },
+    "report_id": "0x5c321dcb1d3fd9f8c0cd6245487f306c03b852b77c727de99fcb134c3a62ff6c",
+    "risk": "LOW_RISK",
+    "schema": "sealed-evidence/1",
+    "social_engineering_indicators": [
+      {
+        "evidence_ids": [
+          "msg:1"
+        ],
+        "type": "urgency"
+      }
+    ]
+  },
+  "chain_receipt": {
+    "block_number": null,
+    "contract_address": null,
+    "mode": "fixture",
+    "network": "fixture-sealed-assets",
+    "tx_hash": null
+  },
+  "merkle": {
+    "leaves": [
+      {
+        "hash": "0x055789d5635261505aaf095a03f7bc2d6861541ded4e095f138ea995eaac1dd7",
+        "id": "msg:1",
+        "payload": {
+          "data": {
+            "end": 15,
+            "pattern_type": "urgency",
+            "redacted_excerpt": "Action Required: Server Maintenance. Review the scheduled maintenance window.",
+            "sha256": "9346491a4a8503976d7aeda6626967b98a22f848d1ccd0e1653c46485d69bcf2",
+            "start": 0
+          },
+          "id": "msg:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0xea6b936a5adb4de28af814a4dbb3e3456d820a0fbd95db573bbf1ebfd9e6c61c",
+        "id": "redir:1",
+        "payload": {
+          "data": {
+            "chain": [
+              "https://status.public-service.org/maintenance"
+            ],
+            "cross_domain_hops": 0,
+            "limit_reached": false,
+            "loop_detected": false,
+            "ssrf_blocked": false,
+            "untrusted_destination": false
+          },
+          "id": "redir:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "redirect"
+        },
+        "type": "redirect"
+      },
+      {
+        "hash": "0xfe5d8f65f68f87ff68d8cbdbbcf38a5d3dc1bbaba3c66c46c1bf357aaba19388",
+        "id": "ti:1",
+        "payload": {
+          "data": {
+            "matched": false,
+            "provider": "openphish",
+            "queried_at": "2026-11-10T12:00:00Z"
+          },
+          "id": "ti:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "threat_intel"
+        },
+        "type": "threat_intel"
+      },
+      {
+        "hash": "0x8ac2527c930996fcdb7e1d5af44bd68d0ceaa69f475bc766954729914ae884aa",
+        "id": "tls:1",
+        "payload": {
+          "data": {
+            "cert_sha256": "29b37281ee00e0044f72b7e7e20eaa7b63d5e1a5483b3f8ff637c560486a375a",
+            "expired": false,
+            "hostname_ok": true,
+            "issuer": "Fixture Public CA",
+            "not_after": null,
+            "not_before": null,
+            "self_signed": false,
+            "trusted": true
+          },
+          "id": "tls:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "tls"
+        },
+        "type": "tls"
+      },
+      {
+        "hash": "0x09190a63484b16cd7ee8e9fbca438dbb56719939a5796cf4e2a8576e9f6546ab",
+        "id": "url:1",
+        "payload": {
+          "data": {
+            "brand_impersonation": false,
+            "confirmed_impersonation": false,
+            "homograph_detected": false,
+            "hostname": "status.public-service.org",
+            "normalized_url": "https://status.public-service.org/maintenance",
+            "obfuscated": false,
+            "suspicious_tld": false,
+            "typosquat_target": null
+          },
+          "id": "url:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "url"
+        },
+        "type": "url"
+      },
+      {
+        "hash": "0x659425d00ec6aa6d2b1c2b35890c146bd73236ee4ef04f7ba8db3a6297afa456",
+        "id": "claim:1",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "url:1"
+          ],
+          "id": "claim:1",
+          "text": "Local URL normalization completed; domain structure is recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "id": "claim:2",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "tls:1"
+          ],
+          "id": "claim:2",
+          "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xafb167a994e5d1dbd1596f4eff504de94e319dc4677439257f4dd7466f246462",
+        "id": "claim:3",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "ti:1"
+          ],
+          "id": "claim:3",
+          "text": "No match was found in the cited threat feed; this does not establish safety."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "id": "claim:4",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "redir:1"
+          ],
+          "id": "claim:4",
+          "text": "Redirect inspection recorded 0 cross-domain transitions."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xc5eeb6b5769193f1090a6fa2e6e6b0887d19de5e3c798ca1941c88651ca2a1d8",
+        "id": "claim:5",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:1"
+          ],
+          "id": "claim:5",
+          "text": "Message pattern detected: urgency."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "id": "cov:1",
+        "payload": {
+          "data": {
+            "redirects": "COMPLETE",
+            "threat_intel": "COMPLETE",
+            "tls": "COMPLETE",
+            "url": "COMPLETE"
+          },
+          "id": "cov:1",
+          "type": "coverage"
+        },
+        "type": "coverage"
+      },
+      {
+        "hash": "0x960f8fe9b256a542f36788c7050d4b56b8f8ac9e92d2c763ae260e39d6f239cc",
+        "id": "meta:1",
+        "payload": {
+          "data": {
+            "created_at": "2026-11-10T12:00:00Z",
+            "limitations": [],
+            "provenance": {
+              "analyzer": "fixture",
+              "collection": "fixture",
+              "fixture_id": "benign-2"
+            },
+            "redacted_url": "https://status.public-service.org/maintenance",
+            "report_id": "0x5c321dcb1d3fd9f8c0cd6245487f306c03b852b77c727de99fcb134c3a62ff6c",
+            "risk": "LOW_RISK",
+            "schema": "sealed-evidence/1",
+            "social_engineering_indicators": [
+              {
+                "evidence_ids": [
+                  "msg:1"
+                ],
+                "type": "urgency"
+              }
+            ]
+          },
+          "id": "meta:1",
+          "type": "meta"
+        },
+        "type": "meta"
+      }
+    ],
+    "proofs_by_id": {
+      "claim:1": [
+        "0x09190a63484b16cd7ee8e9fbca438dbb56719939a5796cf4e2a8576e9f6546ab",
+        "0x6b8c59cb99913e2fad57982d59dae452ee4475918e35e000a79119349ef191b4",
+        "0x9550f387b924b3632b560874bfbca596131f15f913466d7bd0dfb6e4d742a368",
+        "0x58c6772a72ede8cebf8512a5e2780f3ca945ec6981958b432d977261ae2f1dd3"
+      ],
+      "claim:2": [
+        "0xafb167a994e5d1dbd1596f4eff504de94e319dc4677439257f4dd7466f246462",
+        "0x21323f2fed532d8153f8576f0dbb00c96c8610ec6ffc42af04d959376ef5b37e",
+        "0x9550f387b924b3632b560874bfbca596131f15f913466d7bd0dfb6e4d742a368",
+        "0x58c6772a72ede8cebf8512a5e2780f3ca945ec6981958b432d977261ae2f1dd3"
+      ],
+      "claim:3": [
+        "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "0x21323f2fed532d8153f8576f0dbb00c96c8610ec6ffc42af04d959376ef5b37e",
+        "0x9550f387b924b3632b560874bfbca596131f15f913466d7bd0dfb6e4d742a368",
+        "0x58c6772a72ede8cebf8512a5e2780f3ca945ec6981958b432d977261ae2f1dd3"
+      ],
+      "claim:4": [
+        "0xc5eeb6b5769193f1090a6fa2e6e6b0887d19de5e3c798ca1941c88651ca2a1d8",
+        "0x6e3e6660cd6862d5a2da4b20d2402e03763ba5952857e39b87d2700ad5d42852",
+        "0xb89e3c41faf3c701b2939981c2b909c80454dc7ad38be344a23fc13fb0f5432d"
+      ],
+      "claim:5": [
+        "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "0x6e3e6660cd6862d5a2da4b20d2402e03763ba5952857e39b87d2700ad5d42852",
+        "0xb89e3c41faf3c701b2939981c2b909c80454dc7ad38be344a23fc13fb0f5432d"
+      ],
+      "cov:1": [
+        "0x960f8fe9b256a542f36788c7050d4b56b8f8ac9e92d2c763ae260e39d6f239cc",
+        "0x3fa319f112893246d094c006e9a3167f4060eccf700064362f54d002a0147536",
+        "0xb89e3c41faf3c701b2939981c2b909c80454dc7ad38be344a23fc13fb0f5432d"
+      ],
+      "meta:1": [
+        "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "0x3fa319f112893246d094c006e9a3167f4060eccf700064362f54d002a0147536",
+        "0xb89e3c41faf3c701b2939981c2b909c80454dc7ad38be344a23fc13fb0f5432d"
+      ],
+      "msg:1": [
+        "0xea6b936a5adb4de28af814a4dbb3e3456d820a0fbd95db573bbf1ebfd9e6c61c",
+        "0x5a7baadfae7f93416760012eb6b134614e1c8da9487d38cddcc809e4da9339d8",
+        "0x26ae38207318948c95ba10ea1cd18342be6ff9c4cb631720c7664f6d994ac398",
+        "0x58c6772a72ede8cebf8512a5e2780f3ca945ec6981958b432d977261ae2f1dd3"
+      ],
+      "redir:1": [
+        "0x055789d5635261505aaf095a03f7bc2d6861541ded4e095f138ea995eaac1dd7",
+        "0x5a7baadfae7f93416760012eb6b134614e1c8da9487d38cddcc809e4da9339d8",
+        "0x26ae38207318948c95ba10ea1cd18342be6ff9c4cb631720c7664f6d994ac398",
+        "0x58c6772a72ede8cebf8512a5e2780f3ca945ec6981958b432d977261ae2f1dd3"
+      ],
+      "ti:1": [
+        "0x8ac2527c930996fcdb7e1d5af44bd68d0ceaa69f475bc766954729914ae884aa",
+        "0x78b0fb11976df427f19b1cab65038630440f8ebc3d39e7b927eb4f5019120839",
+        "0x26ae38207318948c95ba10ea1cd18342be6ff9c4cb631720c7664f6d994ac398",
+        "0x58c6772a72ede8cebf8512a5e2780f3ca945ec6981958b432d977261ae2f1dd3"
+      ],
+      "tls:1": [
+        "0xfe5d8f65f68f87ff68d8cbdbbcf38a5d3dc1bbaba3c66c46c1bf357aaba19388",
+        "0x78b0fb11976df427f19b1cab65038630440f8ebc3d39e7b927eb4f5019120839",
+        "0x26ae38207318948c95ba10ea1cd18342be6ff9c4cb631720c7664f6d994ac398",
+        "0x58c6772a72ede8cebf8512a5e2780f3ca945ec6981958b432d977261ae2f1dd3"
+      ],
+      "url:1": [
+        "0x659425d00ec6aa6d2b1c2b35890c146bd73236ee4ef04f7ba8db3a6297afa456",
+        "0x6b8c59cb99913e2fad57982d59dae452ee4475918e35e000a79119349ef191b4",
+        "0x9550f387b924b3632b560874bfbca596131f15f913466d7bd0dfb6e4d742a368",
+        "0x58c6772a72ede8cebf8512a5e2780f3ca945ec6981958b432d977261ae2f1dd3"
+      ]
+    },
+    "root": "0xd8ac60b9d2d0bc4b3b71814bbed0c447e6e3f9cba5746207035fb0e20188714e"
+  },
+  "verification": {
+    "claim_grounding": true,
+    "computed_root": "0xd8ac60b9d2d0bc4b3b71814bbed0c447e6e3f9cba5746207035fb0e20188714e",
+    "expected_root": "0xd8ac60b9d2d0bc4b3b71814bbed0c447e6e3f9cba5746207035fb0e20188714e",
+    "failures": [],
+    "leaf_validity": {
+      "claim:1": true,
+      "claim:2": true,
+      "claim:3": true,
+      "claim:4": true,
+      "claim:5": true,
+      "cov:1": true,
+      "meta:1": true,
+      "msg:1": true,
+      "redir:1": true,
+      "ti:1": true,
+      "tls:1": true,
+      "url:1": true
+    },
+    "report_id": "0x5c321dcb1d3fd9f8c0cd6245487f306c03b852b77c727de99fcb134c3a62ff6c",
+    "root_match": true,
+    "schema_match": true,
+    "status": "SUPPORTED",
+    "target_leaf_valid": null
+  }
+}

@@ -1,0 +1,383 @@
+{
+  "bundle": {
+    "ai_claims": [
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "url:1"
+        ],
+        "id": "claim:1",
+        "text": "Local URL normalization completed; domain structure is recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "tls:1"
+        ],
+        "id": "claim:2",
+        "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "ti:1"
+        ],
+        "id": "claim:3",
+        "text": "Threat intelligence is unavailable; this is not evidence of safety."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "redir:1"
+        ],
+        "id": "claim:4",
+        "text": "Redirect inspection recorded 0 cross-domain transitions."
+      }
+    ],
+    "coverage": {
+      "redirects": "COMPLETE",
+      "threat_intel": "TIMEOUT",
+      "tls": "COMPLETE",
+      "url": "COMPLETE"
+    },
+    "created_at": "2026-11-10T12:00:00Z",
+    "evidence": [
+      {
+        "data": {
+          "brand_impersonation": false,
+          "confirmed_impersonation": false,
+          "homograph_detected": false,
+          "hostname": "research-notes.example-archive.org",
+          "normalized_url": "https://research-notes.example-archive.org/paper.pdf",
+          "obfuscated": false,
+          "suspicious_tld": false,
+          "typosquat_target": null
+        },
+        "id": "url:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "url"
+      },
+      {
+        "data": {
+          "chain": [
+            "https://research-notes.example-archive.org/paper.pdf"
+          ],
+          "cross_domain_hops": 0,
+          "limit_reached": false,
+          "loop_detected": false,
+          "ssrf_blocked": false,
+          "untrusted_destination": false
+        },
+        "id": "redir:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "redirect"
+      },
+      {
+        "data": {
+          "cert_sha256": "4cbdc9ff7dacbfa8907f942cc8efebf751f5781255e9ca4ae98bea5900030896",
+          "expired": false,
+          "hostname_ok": true,
+          "issuer": "DigiCert Global G2 TLS RSA SHA256 2020 CA1",
+          "not_after": null,
+          "not_before": null,
+          "self_signed": false,
+          "trusted": true
+        },
+        "id": "tls:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "tls"
+      },
+      {
+        "data": {
+          "matched": null,
+          "provider": "openphish",
+          "queried_at": "2026-11-10T12:00:00Z"
+        },
+        "id": "ti:1",
+        "mode": "fixture",
+        "status": "TIMEOUT",
+        "type": "threat_intel"
+      }
+    ],
+    "limitations": [
+      "ti:1: TIMEOUT"
+    ],
+    "normalized_url": "https://research-notes.example-archive.org/paper.pdf",
+    "provenance": {
+      "analyzer": "fixture",
+      "collection": "fixture",
+      "fixture_id": "benign-3"
+    },
+    "report_id": "0xa3bbef0af0761708838c6d18b6c3f40503c80e5cf574161b1e19477cd0b7eab9",
+    "risk": "INCONCLUSIVE",
+    "schema": "sealed-evidence/1",
+    "social_engineering_indicators": []
+  },
+  "chain_receipt": {
+    "block_number": null,
+    "contract_address": null,
+    "mode": "fixture",
+    "network": "fixture-sealed-assets",
+    "tx_hash": null
+  },
+  "merkle": {
+    "leaves": [
+      {
+        "hash": "0xb60983ec9b2086dbaa24ffd7cefd4078acc48fdde7c3f3d4c4d145f8b9b10bff",
+        "id": "redir:1",
+        "payload": {
+          "data": {
+            "chain": [
+              "https://research-notes.example-archive.org/paper.pdf"
+            ],
+            "cross_domain_hops": 0,
+            "limit_reached": false,
+            "loop_detected": false,
+            "ssrf_blocked": false,
+            "untrusted_destination": false
+          },
+          "id": "redir:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "redirect"
+        },
+        "type": "redirect"
+      },
+      {
+        "hash": "0xa443dfd0144c98b11fc590030a241e0c516463582b5fae21e158ed92b9ce1333",
+        "id": "ti:1",
+        "payload": {
+          "data": {
+            "matched": null,
+            "provider": "openphish",
+            "queried_at": "2026-11-10T12:00:00Z"
+          },
+          "id": "ti:1",
+          "mode": "fixture",
+          "status": "TIMEOUT",
+          "type": "threat_intel"
+        },
+        "type": "threat_intel"
+      },
+      {
+        "hash": "0xf4909764b0e3435e6f960892c2351106021f13f7aeeffde71d6856d356674730",
+        "id": "tls:1",
+        "payload": {
+          "data": {
+            "cert_sha256": "4cbdc9ff7dacbfa8907f942cc8efebf751f5781255e9ca4ae98bea5900030896",
+            "expired": false,
+            "hostname_ok": true,
+            "issuer": "DigiCert Global G2 TLS RSA SHA256 2020 CA1",
+            "not_after": null,
+            "not_before": null,
+            "self_signed": false,
+            "trusted": true
+          },
+          "id": "tls:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "tls"
+        },
+        "type": "tls"
+      },
+      {
+        "hash": "0x5f171e8f31fa738e18452a23107be1132d5fb37d941ad230704bb3d951d39bda",
+        "id": "url:1",
+        "payload": {
+          "data": {
+            "brand_impersonation": false,
+            "confirmed_impersonation": false,
+            "homograph_detected": false,
+            "hostname": "research-notes.example-archive.org",
+            "normalized_url": "https://research-notes.example-archive.org/paper.pdf",
+            "obfuscated": false,
+            "suspicious_tld": false,
+            "typosquat_target": null
+          },
+          "id": "url:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "url"
+        },
+        "type": "url"
+      },
+      {
+        "hash": "0x659425d00ec6aa6d2b1c2b35890c146bd73236ee4ef04f7ba8db3a6297afa456",
+        "id": "claim:1",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "url:1"
+          ],
+          "id": "claim:1",
+          "text": "Local URL normalization completed; domain structure is recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "id": "claim:2",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "tls:1"
+          ],
+          "id": "claim:2",
+          "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xd5eea05a6565eb4a0706ac7c0375eaf0b34e7ce293434ea3712cf10a26757bad",
+        "id": "claim:3",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "ti:1"
+          ],
+          "id": "claim:3",
+          "text": "Threat intelligence is unavailable; this is not evidence of safety."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "id": "claim:4",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "redir:1"
+          ],
+          "id": "claim:4",
+          "text": "Redirect inspection recorded 0 cross-domain transitions."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x6a035e06654a9d9df8b2a84949c6353fc1f1f72b1ea26bae30c6324adfd6439e",
+        "id": "cov:1",
+        "payload": {
+          "data": {
+            "redirects": "COMPLETE",
+            "threat_intel": "TIMEOUT",
+            "tls": "COMPLETE",
+            "url": "COMPLETE"
+          },
+          "id": "cov:1",
+          "type": "coverage"
+        },
+        "type": "coverage"
+      },
+      {
+        "hash": "0x91e0dfb4c7aa8a0cbb13b5885da6e99bf7e62808496d2b95b75567af1084280e",
+        "id": "meta:1",
+        "payload": {
+          "data": {
+            "created_at": "2026-11-10T12:00:00Z",
+            "limitations": [
+              "ti:1: TIMEOUT"
+            ],
+            "provenance": {
+              "analyzer": "fixture",
+              "collection": "fixture",
+              "fixture_id": "benign-3"
+            },
+            "redacted_url": "https://research-notes.example-archive.org/paper.pdf",
+            "report_id": "0xa3bbef0af0761708838c6d18b6c3f40503c80e5cf574161b1e19477cd0b7eab9",
+            "risk": "INCONCLUSIVE",
+            "schema": "sealed-evidence/1",
+            "social_engineering_indicators": []
+          },
+          "id": "meta:1",
+          "type": "meta"
+        },
+        "type": "meta"
+      }
+    ],
+    "proofs_by_id": {
+      "claim:1": [
+        "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "0x9b1cd81928e5d555599e9f83b5dfbe8655bc65dfd47115a3052f4682ae417671",
+        "0x223239bc3d1b25e08f72a45bfc508634b8532eed5d34055abcfd8d7a60d05667",
+        "0xef26c2e22590e1e5957b4e6c41bc766d57f2ff4c92a71f6bac586bef3cedee20"
+      ],
+      "claim:2": [
+        "0x659425d00ec6aa6d2b1c2b35890c146bd73236ee4ef04f7ba8db3a6297afa456",
+        "0x9b1cd81928e5d555599e9f83b5dfbe8655bc65dfd47115a3052f4682ae417671",
+        "0x223239bc3d1b25e08f72a45bfc508634b8532eed5d34055abcfd8d7a60d05667",
+        "0xef26c2e22590e1e5957b4e6c41bc766d57f2ff4c92a71f6bac586bef3cedee20"
+      ],
+      "claim:3": [
+        "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "0x47c56462cee8ef7d621a942742f7b4342dba78640764471aa3ca3f769e678fbe",
+        "0x223239bc3d1b25e08f72a45bfc508634b8532eed5d34055abcfd8d7a60d05667",
+        "0xef26c2e22590e1e5957b4e6c41bc766d57f2ff4c92a71f6bac586bef3cedee20"
+      ],
+      "claim:4": [
+        "0xd5eea05a6565eb4a0706ac7c0375eaf0b34e7ce293434ea3712cf10a26757bad",
+        "0x47c56462cee8ef7d621a942742f7b4342dba78640764471aa3ca3f769e678fbe",
+        "0x223239bc3d1b25e08f72a45bfc508634b8532eed5d34055abcfd8d7a60d05667",
+        "0xef26c2e22590e1e5957b4e6c41bc766d57f2ff4c92a71f6bac586bef3cedee20"
+      ],
+      "cov:1": [
+        "0x91e0dfb4c7aa8a0cbb13b5885da6e99bf7e62808496d2b95b75567af1084280e",
+        "0x32ec336e1f362e6925005ac41619cc846f2895e3dacfc2edb3f0e6a77b049447"
+      ],
+      "meta:1": [
+        "0x6a035e06654a9d9df8b2a84949c6353fc1f1f72b1ea26bae30c6324adfd6439e",
+        "0x32ec336e1f362e6925005ac41619cc846f2895e3dacfc2edb3f0e6a77b049447"
+      ],
+      "redir:1": [
+        "0xa443dfd0144c98b11fc590030a241e0c516463582b5fae21e158ed92b9ce1333",
+        "0x98cc5b86191e7f23b43f7f1433539f749eb36c0d0e1c68e08d977d788b37dd8f",
+        "0xafbab8c5ea13871fd4efab16d6f42c5ac8a32f1b1487097de571de363e2a906c",
+        "0xef26c2e22590e1e5957b4e6c41bc766d57f2ff4c92a71f6bac586bef3cedee20"
+      ],
+      "ti:1": [
+        "0xb60983ec9b2086dbaa24ffd7cefd4078acc48fdde7c3f3d4c4d145f8b9b10bff",
+        "0x98cc5b86191e7f23b43f7f1433539f749eb36c0d0e1c68e08d977d788b37dd8f",
+        "0xafbab8c5ea13871fd4efab16d6f42c5ac8a32f1b1487097de571de363e2a906c",
+        "0xef26c2e22590e1e5957b4e6c41bc766d57f2ff4c92a71f6bac586bef3cedee20"
+      ],
+      "tls:1": [
+        "0x5f171e8f31fa738e18452a23107be1132d5fb37d941ad230704bb3d951d39bda",
+        "0xf51906bb539124ebd017ee39b76e654dbdad5896344019a92761b0316b4b5a6d",
+        "0xafbab8c5ea13871fd4efab16d6f42c5ac8a32f1b1487097de571de363e2a906c",
+        "0xef26c2e22590e1e5957b4e6c41bc766d57f2ff4c92a71f6bac586bef3cedee20"
+      ],
+      "url:1": [
+        "0xf4909764b0e3435e6f960892c2351106021f13f7aeeffde71d6856d356674730",
+        "0xf51906bb539124ebd017ee39b76e654dbdad5896344019a92761b0316b4b5a6d",
+        "0xafbab8c5ea13871fd4efab16d6f42c5ac8a32f1b1487097de571de363e2a906c",
+        "0xef26c2e22590e1e5957b4e6c41bc766d57f2ff4c92a71f6bac586bef3cedee20"
+      ]
+    },
+    "root": "0xb4e4972538b79de030c39d42db1cb78d3bbcee10314d64e0d1a4043191eb915e"
+  },
+  "verification": {
+    "claim_grounding": true,
+    "computed_root": "0xb4e4972538b79de030c39d42db1cb78d3bbcee10314d64e0d1a4043191eb915e",
+    "expected_root": "0xb4e4972538b79de030c39d42db1cb78d3bbcee10314d64e0d1a4043191eb915e",
+    "failures": [],
+    "leaf_validity": {
+      "claim:1": true,
+      "claim:2": true,
+      "claim:3": true,
+      "claim:4": true,
+      "cov:1": true,
+      "meta:1": true,
+      "redir:1": true,
+      "ti:1": true,
+      "tls:1": true,
+      "url:1": true
+    },
+    "report_id": "0xa3bbef0af0761708838c6d18b6c3f40503c80e5cf574161b1e19477cd0b7eab9",
+    "root_match": true,
+    "schema_match": true,
+    "status": "SUPPORTED",
+    "target_leaf_valid": null
+  }
+}

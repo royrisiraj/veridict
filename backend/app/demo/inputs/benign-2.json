@@ -1,0 +1,42 @@
+{
+  "fixture_id": "benign-2",
+  "title": "Urgent maintenance notice on a public status site",
+  "expected_risk": "LOW_RISK",
+  "input": {
+    "url": "https://status.public-service.org/maintenance",
+    "message": "Action Required: Server Maintenance. Review the scheduled maintenance window."
+  },
+  "simulated_checks": {
+    "url": {
+      "normalized_url": "https://status.public-service.org/maintenance",
+      "typosquat_target": null,
+      "homograph_detected": false,
+      "confirmed_impersonation": false,
+      "brand_impersonation": false,
+      "suspicious_tld": false
+    },
+    "tls": {
+      "status": "COMPLETE",
+      "hostname_ok": true,
+      "expired": false,
+      "self_signed": false,
+      "trusted": true,
+      "issuer": "Fixture Public CA",
+      "cert_sha256": "29b37281ee00e0044f72b7e7e20eaa7b63d5e1a5483b3f8ff637c560486a375a"
+    },
+    "threat_intel": {
+      "status": "COMPLETE",
+      "provider": "openphish",
+      "matched": false,
+      "queried_at": "2026-11-10T12:00:00Z"
+    },
+    "redirects": {
+      "status": "COMPLETE",
+      "chain": [
+        "https://status.public-service.org/maintenance"
+      ],
+      "cross_domain_hops": 0,
+      "untrusted_destination": false
+    }
+  }
+}

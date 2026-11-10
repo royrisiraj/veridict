@@ -249,6 +249,12 @@ class FixtureMetadata(StrictModel):
 
 class HealthResponse(StrictModel):
     status: Literal["ok"] = "ok"
+    service: Literal["veridict-api"] = "veridict-api"
+    version: Literal["1"] = "1"
     chain_connected: bool
     contract_address: str
-    chain_mode: Literal["evm", "fixture"]
+    chain_mode: Literal["evm", "fixture", "unavailable"]
+    runtime_mode: Literal["native", "serverless"] = "native"
+    verification_mode: Literal["DEMO_FIXTURE", "PUBLIC_CHAIN", "LOCAL_DEVELOPMENT", "UNAVAILABLE"] = "LOCAL_DEVELOPMENT"
+    live_scanning_enabled: bool = True
+    report_storage: Literal["sqlite", "packaged-read-only"] = "sqlite"

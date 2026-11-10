@@ -1,0 +1,947 @@
+{
+  "bundle": {
+    "ai_claims": [
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "url:1"
+        ],
+        "id": "claim:1",
+        "text": "A protected-domain impersonation indicator was detected."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "tls:1"
+        ],
+        "id": "claim:2",
+        "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "ti:1"
+        ],
+        "id": "claim:3",
+        "text": "The cited threat feed reports a match for this destination."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "redir:1"
+        ],
+        "id": "claim:4",
+        "text": "Redirect inspection recorded 0 cross-domain transitions."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:1"
+        ],
+        "id": "claim:5",
+        "text": "Message pattern detected: urgency."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:2"
+        ],
+        "id": "claim:6",
+        "text": "Message pattern detected: urgency."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:3"
+        ],
+        "id": "claim:7",
+        "text": "Message pattern detected: urgency."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:4"
+        ],
+        "id": "claim:8",
+        "text": "Message pattern detected: urgency."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:5"
+        ],
+        "id": "claim:9",
+        "text": "Message pattern detected: credential harvesting."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:6"
+        ],
+        "id": "claim:10",
+        "text": "Message pattern detected: credential harvesting."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "msg:7"
+        ],
+        "id": "claim:11",
+        "text": "Message pattern detected: otp request."
+      }
+    ],
+    "coverage": {
+      "redirects": "COMPLETE",
+      "threat_intel": "COMPLETE",
+      "tls": "COMPLETE",
+      "url": "COMPLETE"
+    },
+    "created_at": "2026-11-10T12:00:00Z",
+    "evidence": [
+      {
+        "data": {
+          "brand_impersonation": false,
+          "confirmed_impersonation": false,
+          "homograph_detected": true,
+          "hostname": "secure-login-paypai-auth.com",
+          "normalized_url": "https://secure-login-paypai-auth.com/verify?session_token=[REDACTED]",
+          "obfuscated": false,
+          "suspicious_tld": false,
+          "typosquat_target": "paypal.com"
+        },
+        "id": "url:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "url"
+      },
+      {
+        "data": {
+          "end": 6,
+          "pattern_type": "urgency",
+          "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+          "sha256": "ee603f0d79655e1c9c94a8c5923a8528214b779dbc88c09b3a6bff9e1ba318cb",
+          "start": 0
+        },
+        "id": "msg:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "end": 46,
+          "pattern_type": "urgency",
+          "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+          "sha256": "de2d423ac0393a3265f41f3dbb2ef0b7d8de3c9bcf90e777e6f9e768d351f01f",
+          "start": 37
+        },
+        "id": "msg:2",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "end": 93,
+          "pattern_type": "urgency",
+          "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+          "sha256": "d978e0e487928a68d48323006a8eca6e4925b3ea7e8ed50b326325668c93b2ac",
+          "start": 82
+        },
+        "id": "msg:3",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "end": 186,
+          "pattern_type": "urgency",
+          "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+          "sha256": "af1ff2917f1b904dbdfc279bc82977b9cd4c03cbfbb3642c58fd2548cfcb2587",
+          "start": 169
+        },
+        "id": "msg:4",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "end": 68,
+          "pattern_type": "credential_harvesting",
+          "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+          "sha256": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+          "start": 60
+        },
+        "id": "msg:5",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "end": 117,
+          "pattern_type": "credential_harvesting",
+          "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+          "sha256": "428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324",
+          "start": 112
+        },
+        "id": "msg:6",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "end": 81,
+          "pattern_type": "otp_request",
+          "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+          "sha256": "280c607b5e9dc540e790c8e4ce87786bcb7b8776847268c02082eede60a0ce07",
+          "start": 73
+        },
+        "id": "msg:7",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "message_span"
+      },
+      {
+        "data": {
+          "chain": [
+            "https://secure-login-paypai-auth.com/verify?session_token=[REDACTED]"
+          ],
+          "cross_domain_hops": 0,
+          "limit_reached": false,
+          "loop_detected": false,
+          "ssrf_blocked": false,
+          "untrusted_destination": false
+        },
+        "id": "redir:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "redirect"
+      },
+      {
+        "data": {
+          "cert_sha256": "9c64510cdad4be2461a4454a762308d6ea89f3df9b4cea3fdc248ace6cf9fb31",
+          "expired": false,
+          "hostname_ok": true,
+          "issuer": "R3",
+          "not_after": null,
+          "not_before": null,
+          "self_signed": false,
+          "trusted": true
+        },
+        "id": "tls:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "tls"
+      },
+      {
+        "data": {
+          "matched": true,
+          "provider": "openphish",
+          "queried_at": "2026-11-10T12:00:00Z"
+        },
+        "id": "ti:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "threat_intel"
+      }
+    ],
+    "limitations": [],
+    "normalized_url": "https://secure-login-paypai-auth.com/verify?session_token=[REDACTED]",
+    "provenance": {
+      "analyzer": "fixture",
+      "collection": "fixture",
+      "fixture_id": "suspicious-1"
+    },
+    "report_id": "0xfbf136d2c0b7619a74ba6e31edcdc991b89150637efa973295e37e4a276a2883",
+    "risk": "CONFIRMED_MALICIOUS",
+    "schema": "sealed-evidence/1",
+    "social_engineering_indicators": [
+      {
+        "evidence_ids": [
+          "msg:1"
+        ],
+        "type": "urgency"
+      },
+      {
+        "evidence_ids": [
+          "msg:2"
+        ],
+        "type": "urgency"
+      },
+      {
+        "evidence_ids": [
+          "msg:3"
+        ],
+        "type": "urgency"
+      },
+      {
+        "evidence_ids": [
+          "msg:4"
+        ],
+        "type": "urgency"
+      },
+      {
+        "evidence_ids": [
+          "msg:5"
+        ],
+        "type": "credential_harvesting"
+      },
+      {
+        "evidence_ids": [
+          "msg:6"
+        ],
+        "type": "credential_harvesting"
+      },
+      {
+        "evidence_ids": [
+          "msg:7"
+        ],
+        "type": "otp_request"
+      }
+    ]
+  },
+  "chain_receipt": {
+    "block_number": null,
+    "contract_address": null,
+    "mode": "fixture",
+    "network": "fixture-sealed-assets",
+    "tx_hash": null
+  },
+  "merkle": {
+    "leaves": [
+      {
+        "hash": "0x666c9eb06ac988431a030f83a1b2235b1e08575cb91a57723497d67b431cafff",
+        "id": "msg:1",
+        "payload": {
+          "data": {
+            "end": 6,
+            "pattern_type": "urgency",
+            "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+            "sha256": "ee603f0d79655e1c9c94a8c5923a8528214b779dbc88c09b3a6bff9e1ba318cb",
+            "start": 0
+          },
+          "id": "msg:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0x69146fdfb633a61274abe2a400ac256e29fae7da13de91c5c03dcbb50b3f8d15",
+        "id": "msg:2",
+        "payload": {
+          "data": {
+            "end": 46,
+            "pattern_type": "urgency",
+            "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+            "sha256": "de2d423ac0393a3265f41f3dbb2ef0b7d8de3c9bcf90e777e6f9e768d351f01f",
+            "start": 37
+          },
+          "id": "msg:2",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0x4b561cc28cfb85acae8e3cb997cfeb39d3832db343acb71be827c54fbae19b82",
+        "id": "msg:3",
+        "payload": {
+          "data": {
+            "end": 93,
+            "pattern_type": "urgency",
+            "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+            "sha256": "d978e0e487928a68d48323006a8eca6e4925b3ea7e8ed50b326325668c93b2ac",
+            "start": 82
+          },
+          "id": "msg:3",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0x36e8153791863ec2dae878996a47fda27454ac5d06e619ee465a3059bd662815",
+        "id": "msg:4",
+        "payload": {
+          "data": {
+            "end": 186,
+            "pattern_type": "urgency",
+            "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+            "sha256": "af1ff2917f1b904dbdfc279bc82977b9cd4c03cbfbb3642c58fd2548cfcb2587",
+            "start": 169
+          },
+          "id": "msg:4",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0x636138dd3548cdebd2cd4b4362fa7a95d0132ae62e52c71a96aea467d441d0b1",
+        "id": "msg:5",
+        "payload": {
+          "data": {
+            "end": 68,
+            "pattern_type": "credential_harvesting",
+            "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+            "sha256": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+            "start": 60
+          },
+          "id": "msg:5",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0x4233d228100ea6e8431db57cecf760997957ab6081c547cf62245d5f1c39eea5",
+        "id": "msg:6",
+        "payload": {
+          "data": {
+            "end": 117,
+            "pattern_type": "credential_harvesting",
+            "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+            "sha256": "428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324",
+            "start": 112
+          },
+          "id": "msg:6",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0x46f39cf1b8f800a4f34aab0b82b5f64a10c7c5a9f360ffd99b9d6884df756813",
+        "id": "msg:7",
+        "payload": {
+          "data": {
+            "end": 81,
+            "pattern_type": "otp_request",
+            "redacted_excerpt": "URGENT: Your account access has been suspended. Verify your password and 2FA code immediately at https://secure-login-paypai-auth.com/verify?session_token=[REDACTED] within 30 minutes.",
+            "sha256": "280c607b5e9dc540e790c8e4ce87786bcb7b8776847268c02082eede60a0ce07",
+            "start": 73
+          },
+          "id": "msg:7",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "message_span"
+        },
+        "type": "message_span"
+      },
+      {
+        "hash": "0xdfe3a4e818c2a928bc371c5ab0aec7e436d450efb76146527673d2f2741643a3",
+        "id": "redir:1",
+        "payload": {
+          "data": {
+            "chain": [
+              "https://secure-login-paypai-auth.com/verify?session_token=[REDACTED]"
+            ],
+            "cross_domain_hops": 0,
+            "limit_reached": false,
+            "loop_detected": false,
+            "ssrf_blocked": false,
+            "untrusted_destination": false
+          },
+          "id": "redir:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "redirect"
+        },
+        "type": "redirect"
+      },
+      {
+        "hash": "0x4b3b5a3325c6e3820aab160b8a754722b0e2e46f14b9ceb4c34a861354ec62f8",
+        "id": "ti:1",
+        "payload": {
+          "data": {
+            "matched": true,
+            "provider": "openphish",
+            "queried_at": "2026-11-10T12:00:00Z"
+          },
+          "id": "ti:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "threat_intel"
+        },
+        "type": "threat_intel"
+      },
+      {
+        "hash": "0x5e3e9d9ed0bea95576469ca13f370a9e5c35d9379320718e120f684c69af8e95",
+        "id": "tls:1",
+        "payload": {
+          "data": {
+            "cert_sha256": "9c64510cdad4be2461a4454a762308d6ea89f3df9b4cea3fdc248ace6cf9fb31",
+            "expired": false,
+            "hostname_ok": true,
+            "issuer": "R3",
+            "not_after": null,
+            "not_before": null,
+            "self_signed": false,
+            "trusted": true
+          },
+          "id": "tls:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "tls"
+        },
+        "type": "tls"
+      },
+      {
+        "hash": "0xd0ae3a618110569cf84b6c37ccd2f5e9350cba97189718629e36a57805f71098",
+        "id": "url:1",
+        "payload": {
+          "data": {
+            "brand_impersonation": false,
+            "confirmed_impersonation": false,
+            "homograph_detected": true,
+            "hostname": "secure-login-paypai-auth.com",
+            "normalized_url": "https://secure-login-paypai-auth.com/verify?session_token=[REDACTED]",
+            "obfuscated": false,
+            "suspicious_tld": false,
+            "typosquat_target": "paypal.com"
+          },
+          "id": "url:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "url"
+        },
+        "type": "url"
+      },
+      {
+        "hash": "0x69f8e5c2274911d90f44ff1c5264e435becb45f312d3c53aa49ef74d6fcd3547",
+        "id": "claim:1",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "url:1"
+          ],
+          "id": "claim:1",
+          "text": "A protected-domain impersonation indicator was detected."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x2c209ad0c98c2e00fdd3b3c345a4cd764f905fcd0b39a1f85ccfad107d74d5a0",
+        "id": "claim:10",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:6"
+          ],
+          "id": "claim:10",
+          "text": "Message pattern detected: credential harvesting."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xe4c92a4a2a7bc8022ff5c2275223e6dabfbf50710a8bb4734ac456f85e412c09",
+        "id": "claim:11",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:7"
+          ],
+          "id": "claim:11",
+          "text": "Message pattern detected: otp request."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "id": "claim:2",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "tls:1"
+          ],
+          "id": "claim:2",
+          "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xb13c30eb532e0682923ef9f048a4ac8a75b0d73bbf6788ef2480e9852d03a411",
+        "id": "claim:3",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "ti:1"
+          ],
+          "id": "claim:3",
+          "text": "The cited threat feed reports a match for this destination."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "id": "claim:4",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "redir:1"
+          ],
+          "id": "claim:4",
+          "text": "Redirect inspection recorded 0 cross-domain transitions."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xc5eeb6b5769193f1090a6fa2e6e6b0887d19de5e3c798ca1941c88651ca2a1d8",
+        "id": "claim:5",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:1"
+          ],
+          "id": "claim:5",
+          "text": "Message pattern detected: urgency."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xa235e59b7f30606654ff52f259cd191824cab15373e9957ad002b9356fbe1459",
+        "id": "claim:6",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:2"
+          ],
+          "id": "claim:6",
+          "text": "Message pattern detected: urgency."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x7890023489161d7a8ec2e92581545b4aec706beee8bbbc203db9150f4d37794c",
+        "id": "claim:7",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:3"
+          ],
+          "id": "claim:7",
+          "text": "Message pattern detected: urgency."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x17aaf6c5af5fae22c27b1e4283e20e897fbbd2ee2e3c9a6fd08b1c49b3f3e34c",
+        "id": "claim:8",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:4"
+          ],
+          "id": "claim:8",
+          "text": "Message pattern detected: urgency."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x5b89dce22d068ee881c561c49adc340c59c97a049717a01183872fbd1091db6b",
+        "id": "claim:9",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "msg:5"
+          ],
+          "id": "claim:9",
+          "text": "Message pattern detected: credential harvesting."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "id": "cov:1",
+        "payload": {
+          "data": {
+            "redirects": "COMPLETE",
+            "threat_intel": "COMPLETE",
+            "tls": "COMPLETE",
+            "url": "COMPLETE"
+          },
+          "id": "cov:1",
+          "type": "coverage"
+        },
+        "type": "coverage"
+      },
+      {
+        "hash": "0x89fffe18bedf6915aa8fcd7eacd1f233dcb49cb01918e458cc941cbee7201e46",
+        "id": "meta:1",
+        "payload": {
+          "data": {
+            "created_at": "2026-11-10T12:00:00Z",
+            "limitations": [],
+            "provenance": {
+              "analyzer": "fixture",
+              "collection": "fixture",
+              "fixture_id": "suspicious-1"
+            },
+            "redacted_url": "https://secure-login-paypai-auth.com/verify?session_token=[REDACTED]",
+            "report_id": "0xfbf136d2c0b7619a74ba6e31edcdc991b89150637efa973295e37e4a276a2883",
+            "risk": "CONFIRMED_MALICIOUS",
+            "schema": "sealed-evidence/1",
+            "social_engineering_indicators": [
+              {
+                "evidence_ids": [
+                  "msg:1"
+                ],
+                "type": "urgency"
+              },
+              {
+                "evidence_ids": [
+                  "msg:2"
+                ],
+                "type": "urgency"
+              },
+              {
+                "evidence_ids": [
+                  "msg:3"
+                ],
+                "type": "urgency"
+              },
+              {
+                "evidence_ids": [
+                  "msg:4"
+                ],
+                "type": "urgency"
+              },
+              {
+                "evidence_ids": [
+                  "msg:5"
+                ],
+                "type": "credential_harvesting"
+              },
+              {
+                "evidence_ids": [
+                  "msg:6"
+                ],
+                "type": "credential_harvesting"
+              },
+              {
+                "evidence_ids": [
+                  "msg:7"
+                ],
+                "type": "otp_request"
+              }
+            ]
+          },
+          "id": "meta:1",
+          "type": "meta"
+        },
+        "type": "meta"
+      }
+    ],
+    "proofs_by_id": {
+      "claim:1": [
+        "0xd0ae3a618110569cf84b6c37ccd2f5e9350cba97189718629e36a57805f71098",
+        "0x8935e50d0fa4cc202c05408b9af23864738017575a81c3aa8d47ed9634ad30aa",
+        "0x3b94cf9db6cdd9a3b8d25d4e2ffc8dde79b8a6809c35d47dc4c85c568a5602c6",
+        "0xd47c59e0f22fd968b598798c67abaae85923038bcdf128e1d0d54f0f36687c27",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "claim:10": [
+        "0xe4c92a4a2a7bc8022ff5c2275223e6dabfbf50710a8bb4734ac456f85e412c09",
+        "0xc1c4f6f4aca97bea07364cef2032b5f3452a7e52d958e0f187e10462ddfa5a0c",
+        "0x94598b97c2864381f582b4a7585399c26394cad119523649b58db52eaf2dbd51",
+        "0xd47c59e0f22fd968b598798c67abaae85923038bcdf128e1d0d54f0f36687c27",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "claim:11": [
+        "0x2c209ad0c98c2e00fdd3b3c345a4cd764f905fcd0b39a1f85ccfad107d74d5a0",
+        "0xc1c4f6f4aca97bea07364cef2032b5f3452a7e52d958e0f187e10462ddfa5a0c",
+        "0x94598b97c2864381f582b4a7585399c26394cad119523649b58db52eaf2dbd51",
+        "0xd47c59e0f22fd968b598798c67abaae85923038bcdf128e1d0d54f0f36687c27",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "claim:2": [
+        "0xb13c30eb532e0682923ef9f048a4ac8a75b0d73bbf6788ef2480e9852d03a411",
+        "0xce4409e2aa196bd19ccda1ec0a88e582a18c9a021b21d362ce76f53714a122e8",
+        "0x94598b97c2864381f582b4a7585399c26394cad119523649b58db52eaf2dbd51",
+        "0xd47c59e0f22fd968b598798c67abaae85923038bcdf128e1d0d54f0f36687c27",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "claim:3": [
+        "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "0xce4409e2aa196bd19ccda1ec0a88e582a18c9a021b21d362ce76f53714a122e8",
+        "0x94598b97c2864381f582b4a7585399c26394cad119523649b58db52eaf2dbd51",
+        "0xd47c59e0f22fd968b598798c67abaae85923038bcdf128e1d0d54f0f36687c27",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "claim:4": [
+        "0xc5eeb6b5769193f1090a6fa2e6e6b0887d19de5e3c798ca1941c88651ca2a1d8",
+        "0x755f5e6b834944c5f0528da77371f463be9dd69b118c592bc6413c82503beaec",
+        "0xf70f01ee6ca0967aa9a7c0eb680ff031069ed2e84085d083e636a1a8989cedab",
+        "0xb933074739b744ec8c67ece9e02be8feab250760d019aba4586e0de578132756"
+      ],
+      "claim:5": [
+        "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "0x755f5e6b834944c5f0528da77371f463be9dd69b118c592bc6413c82503beaec",
+        "0xf70f01ee6ca0967aa9a7c0eb680ff031069ed2e84085d083e636a1a8989cedab",
+        "0xb933074739b744ec8c67ece9e02be8feab250760d019aba4586e0de578132756"
+      ],
+      "claim:6": [
+        "0x7890023489161d7a8ec2e92581545b4aec706beee8bbbc203db9150f4d37794c",
+        "0x3fa319f112893246d094c006e9a3167f4060eccf700064362f54d002a0147536",
+        "0xf70f01ee6ca0967aa9a7c0eb680ff031069ed2e84085d083e636a1a8989cedab",
+        "0xb933074739b744ec8c67ece9e02be8feab250760d019aba4586e0de578132756"
+      ],
+      "claim:7": [
+        "0xa235e59b7f30606654ff52f259cd191824cab15373e9957ad002b9356fbe1459",
+        "0x3fa319f112893246d094c006e9a3167f4060eccf700064362f54d002a0147536",
+        "0xf70f01ee6ca0967aa9a7c0eb680ff031069ed2e84085d083e636a1a8989cedab",
+        "0xb933074739b744ec8c67ece9e02be8feab250760d019aba4586e0de578132756"
+      ],
+      "claim:8": [
+        "0x5b89dce22d068ee881c561c49adc340c59c97a049717a01183872fbd1091db6b",
+        "0xfabac32978ba7139d7f0d99bf56b54e7c0af033a602330c1d6e2f514cb9ccc12",
+        "0x9709d16dd32b68896f266f2a937bced0bf09edbd08e2e72ccdbc9c739390612f",
+        "0xb933074739b744ec8c67ece9e02be8feab250760d019aba4586e0de578132756"
+      ],
+      "claim:9": [
+        "0x17aaf6c5af5fae22c27b1e4283e20e897fbbd2ee2e3c9a6fd08b1c49b3f3e34c",
+        "0xfabac32978ba7139d7f0d99bf56b54e7c0af033a602330c1d6e2f514cb9ccc12",
+        "0x9709d16dd32b68896f266f2a937bced0bf09edbd08e2e72ccdbc9c739390612f",
+        "0xb933074739b744ec8c67ece9e02be8feab250760d019aba4586e0de578132756"
+      ],
+      "cov:1": [
+        "0x89fffe18bedf6915aa8fcd7eacd1f233dcb49cb01918e458cc941cbee7201e46",
+        "0x1e52a5336112198331e4d699781ce028bcf6a6df0f2082357beb9e76266d934b",
+        "0x9709d16dd32b68896f266f2a937bced0bf09edbd08e2e72ccdbc9c739390612f",
+        "0xb933074739b744ec8c67ece9e02be8feab250760d019aba4586e0de578132756"
+      ],
+      "meta:1": [
+        "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "0x1e52a5336112198331e4d699781ce028bcf6a6df0f2082357beb9e76266d934b",
+        "0x9709d16dd32b68896f266f2a937bced0bf09edbd08e2e72ccdbc9c739390612f",
+        "0xb933074739b744ec8c67ece9e02be8feab250760d019aba4586e0de578132756"
+      ],
+      "msg:1": [
+        "0x69146fdfb633a61274abe2a400ac256e29fae7da13de91c5c03dcbb50b3f8d15",
+        "0x6475bc6867a587abcb1c4c0f8f57e33a6c6600b34324898d31071720df89c873",
+        "0x1981dd4d867eebd6711d0c3f885f4da08503126883d3fb2d4ab77602443310db",
+        "0x6ee09033523f4f4bbf3c488e6de0a8633c4aaa44a2081f9e473fb475696c33f5",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "msg:2": [
+        "0x666c9eb06ac988431a030f83a1b2235b1e08575cb91a57723497d67b431cafff",
+        "0x6475bc6867a587abcb1c4c0f8f57e33a6c6600b34324898d31071720df89c873",
+        "0x1981dd4d867eebd6711d0c3f885f4da08503126883d3fb2d4ab77602443310db",
+        "0x6ee09033523f4f4bbf3c488e6de0a8633c4aaa44a2081f9e473fb475696c33f5",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "msg:3": [
+        "0x36e8153791863ec2dae878996a47fda27454ac5d06e619ee465a3059bd662815",
+        "0x7b50ea8fe814eb4802cfc4bfe63559c38d44c2598f49e8f8c849dd77620c3484",
+        "0x1981dd4d867eebd6711d0c3f885f4da08503126883d3fb2d4ab77602443310db",
+        "0x6ee09033523f4f4bbf3c488e6de0a8633c4aaa44a2081f9e473fb475696c33f5",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "msg:4": [
+        "0x4b561cc28cfb85acae8e3cb997cfeb39d3832db343acb71be827c54fbae19b82",
+        "0x7b50ea8fe814eb4802cfc4bfe63559c38d44c2598f49e8f8c849dd77620c3484",
+        "0x1981dd4d867eebd6711d0c3f885f4da08503126883d3fb2d4ab77602443310db",
+        "0x6ee09033523f4f4bbf3c488e6de0a8633c4aaa44a2081f9e473fb475696c33f5",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "msg:5": [
+        "0x4233d228100ea6e8431db57cecf760997957ab6081c547cf62245d5f1c39eea5",
+        "0xe8b523dbaa9c6a38ea214a1fba25c50fde5b6f02aa264a0dfdfa23b482fa23eb",
+        "0x678239ef8b09d3d7b3f1c1eb147c4343736251803c2e6e813b61b7d60594c374",
+        "0x6ee09033523f4f4bbf3c488e6de0a8633c4aaa44a2081f9e473fb475696c33f5",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "msg:6": [
+        "0x636138dd3548cdebd2cd4b4362fa7a95d0132ae62e52c71a96aea467d441d0b1",
+        "0xe8b523dbaa9c6a38ea214a1fba25c50fde5b6f02aa264a0dfdfa23b482fa23eb",
+        "0x678239ef8b09d3d7b3f1c1eb147c4343736251803c2e6e813b61b7d60594c374",
+        "0x6ee09033523f4f4bbf3c488e6de0a8633c4aaa44a2081f9e473fb475696c33f5",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "msg:7": [
+        "0xdfe3a4e818c2a928bc371c5ab0aec7e436d450efb76146527673d2f2741643a3",
+        "0x673df816297b1474e5cfaf839f12b7bba9ea310f08e7fd667fc286b882fc5ca3",
+        "0x678239ef8b09d3d7b3f1c1eb147c4343736251803c2e6e813b61b7d60594c374",
+        "0x6ee09033523f4f4bbf3c488e6de0a8633c4aaa44a2081f9e473fb475696c33f5",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "redir:1": [
+        "0x46f39cf1b8f800a4f34aab0b82b5f64a10c7c5a9f360ffd99b9d6884df756813",
+        "0x673df816297b1474e5cfaf839f12b7bba9ea310f08e7fd667fc286b882fc5ca3",
+        "0x678239ef8b09d3d7b3f1c1eb147c4343736251803c2e6e813b61b7d60594c374",
+        "0x6ee09033523f4f4bbf3c488e6de0a8633c4aaa44a2081f9e473fb475696c33f5",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "ti:1": [
+        "0x5e3e9d9ed0bea95576469ca13f370a9e5c35d9379320718e120f684c69af8e95",
+        "0x6ea9c7248db12cfe13c80b51a705b5b037c2b508afee456199229b555ff030be",
+        "0x3b94cf9db6cdd9a3b8d25d4e2ffc8dde79b8a6809c35d47dc4c85c568a5602c6",
+        "0xd47c59e0f22fd968b598798c67abaae85923038bcdf128e1d0d54f0f36687c27",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "tls:1": [
+        "0x4b3b5a3325c6e3820aab160b8a754722b0e2e46f14b9ceb4c34a861354ec62f8",
+        "0x6ea9c7248db12cfe13c80b51a705b5b037c2b508afee456199229b555ff030be",
+        "0x3b94cf9db6cdd9a3b8d25d4e2ffc8dde79b8a6809c35d47dc4c85c568a5602c6",
+        "0xd47c59e0f22fd968b598798c67abaae85923038bcdf128e1d0d54f0f36687c27",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ],
+      "url:1": [
+        "0x69f8e5c2274911d90f44ff1c5264e435becb45f312d3c53aa49ef74d6fcd3547",
+        "0x8935e50d0fa4cc202c05408b9af23864738017575a81c3aa8d47ed9634ad30aa",
+        "0x3b94cf9db6cdd9a3b8d25d4e2ffc8dde79b8a6809c35d47dc4c85c568a5602c6",
+        "0xd47c59e0f22fd968b598798c67abaae85923038bcdf128e1d0d54f0f36687c27",
+        "0xa0ac7f8c0197d9b147597991d1effeef3eb507193c5f43ea85ffa4d07b90e877"
+      ]
+    },
+    "root": "0xb93ae53c3f7164d040b2366f76741c0fbf7a84b7e8f8b51af17190f0d3713f45"
+  },
+  "verification": {
+    "claim_grounding": true,
+    "computed_root": "0xb93ae53c3f7164d040b2366f76741c0fbf7a84b7e8f8b51af17190f0d3713f45",
+    "expected_root": "0xb93ae53c3f7164d040b2366f76741c0fbf7a84b7e8f8b51af17190f0d3713f45",
+    "failures": [],
+    "leaf_validity": {
+      "claim:1": true,
+      "claim:10": true,
+      "claim:11": true,
+      "claim:2": true,
+      "claim:3": true,
+      "claim:4": true,
+      "claim:5": true,
+      "claim:6": true,
+      "claim:7": true,
+      "claim:8": true,
+      "claim:9": true,
+      "cov:1": true,
+      "meta:1": true,
+      "msg:1": true,
+      "msg:2": true,
+      "msg:3": true,
+      "msg:4": true,
+      "msg:5": true,
+      "msg:6": true,
+      "msg:7": true,
+      "redir:1": true,
+      "ti:1": true,
+      "tls:1": true,
+      "url:1": true
+    },
+    "report_id": "0xfbf136d2c0b7619a74ba6e31edcdc991b89150637efa973295e37e4a276a2883",
+    "root_match": true,
+    "schema_match": true,
+    "status": "SUPPORTED",
+    "target_leaf_valid": null
+  }
+}

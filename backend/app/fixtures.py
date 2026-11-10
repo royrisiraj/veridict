@@ -6,12 +6,16 @@ from app.models import FixtureMetadata, InvestigateRequest
 from app.security.redact import redact_text, redact_url
 
 FIXTURE_IDS = tuple([f"suspicious-{i}" for i in range(1, 4)] + [f"benign-{i}" for i in range(1, 4)])
+PACKAGED = Path(__file__).resolve().parent / "demo" / "inputs"
 
 
 def load_fixture(fixture_id: str) -> dict:
     if fixture_id not in FIXTURE_IDS:
         raise LookupError("Fixture not found")
-    return json.loads((ROOT / "fixtures" / f"{fixture_id}.json").read_text(encoding="utf-8"))
+    source = ROOT / "fixtures" / f"{fixture_id}.json"
+    if not source.is_file():
+        source = PACKAGED / f"{fixture_id}.json"
+    return json.loads(source.read_text(encoding="utf-8"))
 
 
 def fixture_metadata() -> list[FixtureMetadata]:

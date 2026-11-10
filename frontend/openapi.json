@@ -418,7 +418,8 @@
           "chain_mode": {
             "enum": [
               "evm",
-              "fixture"
+              "fixture",
+              "unavailable"
             ],
             "title": "Chain Mode",
             "type": "string"
@@ -427,10 +428,56 @@
             "title": "Contract Address",
             "type": "string"
           },
+          "live_scanning_enabled": {
+            "default": true,
+            "title": "Live Scanning Enabled",
+            "type": "boolean"
+          },
+          "report_storage": {
+            "default": "sqlite",
+            "enum": [
+              "sqlite",
+              "packaged-read-only"
+            ],
+            "title": "Report Storage",
+            "type": "string"
+          },
+          "runtime_mode": {
+            "default": "native",
+            "enum": [
+              "native",
+              "serverless"
+            ],
+            "title": "Runtime Mode",
+            "type": "string"
+          },
+          "service": {
+            "const": "veridict-api",
+            "default": "veridict-api",
+            "title": "Service",
+            "type": "string"
+          },
           "status": {
             "const": "ok",
             "default": "ok",
             "title": "Status",
+            "type": "string"
+          },
+          "verification_mode": {
+            "default": "LOCAL_DEVELOPMENT",
+            "enum": [
+              "DEMO_FIXTURE",
+              "PUBLIC_CHAIN",
+              "LOCAL_DEVELOPMENT",
+              "UNAVAILABLE"
+            ],
+            "title": "Verification Mode",
+            "type": "string"
+          },
+          "version": {
+            "const": "1",
+            "default": "1",
+            "title": "Version",
             "type": "string"
           }
         },

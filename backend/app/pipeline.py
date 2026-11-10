@@ -23,7 +23,7 @@ from app.security.url import normalize_url
 STAGES = ["url", "redirects", "tls", "threat_intel", "ai", "seal"]
 
 
-async def investigate(request, settings, database, registry, verifier, emit):
+async def investigate(request, settings, database, registry, verifier, emit, report_id: str | None = None):
     fixture = load_fixture(request.fixture_id) if request.fixture_id else None
     if fixture and normalize_url(request.url).normalized_url != normalize_url(fixture["input"]["url"]).normalized_url:
         raise ValueError("Fixture input URL does not match the selected fixture")
@@ -91,7 +91,7 @@ async def investigate(request, settings, database, registry, verifier, emit):
     risk = classify(evidence, coverage)
     await emit("ai")
     analysis, analyzer_mode = await analyze(evidence, settings, fixture=bool(fixture))
-    bundle = EvidenceBundle(report_id="0x" + keccak256(uuid4().bytes).hex(), created_at=created,
+    bundle = EvidenceBundle(report_id=report_id or "0x" + keccak256(uuid4().bytes).hex(), created_at=created,
         normalized_url=safe_url, risk=risk, evidence=evidence, ai_claims=analysis.claims, coverage=coverage,
         provenance=Provenance(collection=mode, analyzer=analyzer_mode, fixture_id=request.fixture_id),
         social_engineering_indicators=analysis.social_engineering_indicators, limitations=analysis.limitations)

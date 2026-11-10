@@ -73,4 +73,7 @@ def test_restart_does_not_reconstruct_simulated_anchor_from_report(tmp_path):
 
 
 def test_health_labels_memory_mode(client):
-    assert client.get("/health").json() == {"status": "ok", "chain_connected": False, "contract_address": "", "chain_mode": "fixture"}
+    state = client.get("/health").json()
+    assert state["status"] == "ok" and state["chain_mode"] == "fixture"
+    assert not state["chain_connected"] and state["contract_address"] == ""
+    assert state["verification_mode"] == "LOCAL_DEVELOPMENT"

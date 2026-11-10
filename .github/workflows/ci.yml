@@ -17,6 +17,8 @@ jobs:
         working-directory: backend
       - run: uv run pytest
         working-directory: backend
+      - run: uv run python scripts/package_demo.py --check
+        working-directory: backend
       - run: pnpm --dir frontend install --frozen-lockfile
       - run: uv run python scripts/export_openapi.py --check
         working-directory: backend
@@ -26,10 +28,4 @@ jobs:
       - run: pnpm --dir frontend build
       - run: pnpm --dir frontend exec playwright install --with-deps chromium
       - run: pnpm --dir frontend test:e2e
-      - run: docker compose up --build -d --wait
-      - run: uv run python scripts/rehearse.py --url http://localhost:8000 --require-evm
-        working-directory: backend
-      - if: always()
-        run: docker compose logs --tail=100
-      - if: always()
-        run: docker compose down
+      - run: pnpm --dir frontend test:deployment

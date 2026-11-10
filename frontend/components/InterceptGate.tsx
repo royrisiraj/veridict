@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, Check, LoaderCircle, LockKeyhole, ShieldAlert, X } from "lucide-react";
 import { streamInvestigation } from "@/lib/api";
 import { riskLabels, type InvestigationInput, type Report } from "@/lib/types";
+import { anchorLabel } from "@/lib/anchoring";
 
 const stages = [
   ["url", "URL & IDNA normalization"], ["redirects", "SSRF & redirect inspection"],
@@ -35,17 +36,17 @@ export default function InterceptGate({ input, onClose }: { input: Investigation
   const canProceed = Boolean(report && !input.fixture_id && !ssrf && /^https?:\/\//.test(input.url));
   return <dialog ref={ref} className="gate" aria-labelledby="gate-title" onCancel={onClose}>
     <div className="gate-heading"><span className="eyebrow"><LockKeyhole size={14}/> TRUST//INTERCEPT</span><button className="icon-button" onClick={onClose} aria-label="Close gate"><X size={20}/></button></div>
-    <h2 id="gate-title">Navigation intercepted.</h2><p className="muted">Inspect the destination before extending trust.</p>
+    <h2 id="gate-title">Navigation intercepted.</h2><p className="muted">{input.fixture_id ? "Loading recorded fixture findings and verifying their reference seal. No live target is contacted." : "Inspect the destination before extending trust."}</p>
     <div className="blocked-destination"><LockKeyhole size={16}/><span>{input.url}</span></div>
     <div className="progress-track"><div style={{ width: `${report ? 100 : Math.max(5, index / stages.length * 100)}%` }}/></div>
     <ol className="stage-list">{stages.map(([key, label], i) => <li key={key} className={report || i < index ? "done" : i === index ? "active" : ""}>
-      {report || i < index ? <Check size={16}/> : i === index && !error ? <LoaderCircle className="spin" size={16}/> : <span className="stage-dot"/>}<span>{label}</span>
+      {report || i < index ? <Check size={16}/> : i === index && !error ? <LoaderCircle className="spin" size={16}/> : <span className="stage-dot"/>}<span>{key === "seal" && input.fixture_id ? "Merkle seal & reference check" : label}</span>
     </li>)}</ol>
     {error && <div role="alert" className="error-panel"><ShieldAlert size={18}/>{error}<button onClick={() => { setError(""); setStage("url"); setAttempt((a) => a + 1); }}>Retry inspection</button></div>}
     {report && <div className={`gate-verdict risk-${report.bundle.risk.toLowerCase()}`}>
       <span className="eyebrow">DETERMINISTIC VERDICT</span><h3>{riskLabels[report.bundle.risk]}</h3>
       <p>{report.bundle.risk === "INCONCLUSIVE" ? "Some mandatory checks are unavailable. Missing intelligence is not evidence of safety." : "Based on collected indicators and coverage. The AI cannot override this verdict."}</p>
-      <span className="micro">{report.bundle.provenance.collection.toUpperCase()} EVIDENCE · {report.chain_receipt.mode === "fixture" ? "SIMULATED ANCHOR" : "LOCAL EVM ANCHOR"}</span>
+      <span className="micro">{report.bundle.provenance.collection.toUpperCase()} EVIDENCE · {anchorLabel(report.chain_receipt)}</span>
       {report.bundle.evidence.some((e) => e.type === "threat_intel" && e.status === "COMPLETE" && e.data.provider === "google_safe_browsing" && e.data.matched) && <p>This destination may be unsafe; false positives and false negatives are possible. <a href="https://safebrowsing.google.com/" target="_blank" rel="noreferrer">Advisory provided by Google.</a></p>}
     </div>}
     <div className="gate-actions"><button className="button secondary" onClick={onClose}>Block navigation</button>{report && <Link className="button primary" href={`/report/${report.bundle.report_id}`}>Open full Evidence Passport <ArrowUpRight size={16}/></Link>}</div>

@@ -1,0 +1,42 @@
+{
+  "fixture_id": "suspicious-2",
+  "title": "Bank impersonation and credential harvesting",
+  "expected_risk": "CONFIRMED_MALICIOUS",
+  "input": {
+    "url": "https://secure-examplebank-login.top/verify",
+    "message": "URGENT: ExampleBank security requires your password and OTP immediately."
+  },
+  "simulated_checks": {
+    "url": {
+      "normalized_url": "https://secure-examplebank-login.top/verify",
+      "typosquat_target": "examplebank.com",
+      "homograph_detected": true,
+      "confirmed_impersonation": true,
+      "brand_impersonation": true,
+      "suspicious_tld": true
+    },
+    "tls": {
+      "status": "COMPLETE",
+      "hostname_ok": false,
+      "expired": false,
+      "self_signed": true,
+      "trusted": false,
+      "issuer": "Untrusted Demo CA",
+      "cert_sha256": "7613c47619eb6a23f1c78550423ff5f978d494cd11ea7c0353d86c5f4431ce80"
+    },
+    "threat_intel": {
+      "status": "COMPLETE",
+      "provider": "openphish",
+      "matched": false,
+      "queried_at": "2026-11-10T12:00:00Z"
+    },
+    "redirects": {
+      "status": "COMPLETE",
+      "chain": [
+        "https://secure-examplebank-login.top/verify"
+      ],
+      "cross_domain_hops": 0,
+      "untrusted_destination": false
+    }
+  }
+}

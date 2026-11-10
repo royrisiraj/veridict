@@ -1,0 +1,385 @@
+{
+  "bundle": {
+    "ai_claims": [
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "url:1"
+        ],
+        "id": "claim:1",
+        "text": "Local URL normalization completed; domain structure is recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "tls:1"
+        ],
+        "id": "claim:2",
+        "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "ti:1"
+        ],
+        "id": "claim:3",
+        "text": "No match was found in the cited threat feed; this does not establish safety."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "redir:1"
+        ],
+        "id": "claim:4",
+        "text": "Redirect inspection recorded 3 cross-domain transitions."
+      }
+    ],
+    "coverage": {
+      "redirects": "COMPLETE",
+      "threat_intel": "COMPLETE",
+      "tls": "COMPLETE",
+      "url": "COMPLETE"
+    },
+    "created_at": "2026-11-10T12:00:00Z",
+    "evidence": [
+      {
+        "data": {
+          "brand_impersonation": false,
+          "confirmed_impersonation": false,
+          "homograph_detected": false,
+          "hostname": "news-gateway.example",
+          "normalized_url": "https://news-gateway.example/start",
+          "obfuscated": false,
+          "suspicious_tld": false,
+          "typosquat_target": null
+        },
+        "id": "url:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "url"
+      },
+      {
+        "data": {
+          "chain": [
+            "https://news-gateway.example/start",
+            "https://redirect-one.example/go",
+            "https://redirect-two.example/go",
+            "https://newly-observed.example/document"
+          ],
+          "cross_domain_hops": 3,
+          "limit_reached": false,
+          "loop_detected": false,
+          "ssrf_blocked": false,
+          "untrusted_destination": true
+        },
+        "id": "redir:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "redirect"
+      },
+      {
+        "data": {
+          "cert_sha256": "90960c64b3088c30bff65f2159ef2a6ab459c71ca97634138da7248fe3ba0fe4",
+          "expired": false,
+          "hostname_ok": true,
+          "issuer": "Fixture Public CA",
+          "not_after": null,
+          "not_before": null,
+          "self_signed": false,
+          "trusted": true
+        },
+        "id": "tls:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "tls"
+      },
+      {
+        "data": {
+          "matched": false,
+          "provider": "openphish",
+          "queried_at": "2026-11-10T12:00:00Z"
+        },
+        "id": "ti:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "threat_intel"
+      }
+    ],
+    "limitations": [],
+    "normalized_url": "https://news-gateway.example/start",
+    "provenance": {
+      "analyzer": "fixture",
+      "collection": "fixture",
+      "fixture_id": "suspicious-3"
+    },
+    "report_id": "0xe4489a9294c510492004cc5c90c37fa0866ba4ec2d6421f1122075e00f64ea5d",
+    "risk": "SUSPICIOUS",
+    "schema": "sealed-evidence/1",
+    "social_engineering_indicators": []
+  },
+  "chain_receipt": {
+    "block_number": null,
+    "contract_address": null,
+    "mode": "fixture",
+    "network": "fixture-sealed-assets",
+    "tx_hash": null
+  },
+  "merkle": {
+    "leaves": [
+      {
+        "hash": "0x644fa151ef2ef4263280422c403ff5e6083d630902dc2934d48280c2fc27452c",
+        "id": "redir:1",
+        "payload": {
+          "data": {
+            "chain": [
+              "https://news-gateway.example/start",
+              "https://redirect-one.example/go",
+              "https://redirect-two.example/go",
+              "https://newly-observed.example/document"
+            ],
+            "cross_domain_hops": 3,
+            "limit_reached": false,
+            "loop_detected": false,
+            "ssrf_blocked": false,
+            "untrusted_destination": true
+          },
+          "id": "redir:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "redirect"
+        },
+        "type": "redirect"
+      },
+      {
+        "hash": "0xfe5d8f65f68f87ff68d8cbdbbcf38a5d3dc1bbaba3c66c46c1bf357aaba19388",
+        "id": "ti:1",
+        "payload": {
+          "data": {
+            "matched": false,
+            "provider": "openphish",
+            "queried_at": "2026-11-10T12:00:00Z"
+          },
+          "id": "ti:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "threat_intel"
+        },
+        "type": "threat_intel"
+      },
+      {
+        "hash": "0x409166cb32f4c737233f18b0914a5f0ff0f2b5d1f9022a296f3d91a7b418cb43",
+        "id": "tls:1",
+        "payload": {
+          "data": {
+            "cert_sha256": "90960c64b3088c30bff65f2159ef2a6ab459c71ca97634138da7248fe3ba0fe4",
+            "expired": false,
+            "hostname_ok": true,
+            "issuer": "Fixture Public CA",
+            "not_after": null,
+            "not_before": null,
+            "self_signed": false,
+            "trusted": true
+          },
+          "id": "tls:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "tls"
+        },
+        "type": "tls"
+      },
+      {
+        "hash": "0xf074709898c7f3295a1e2d3b864d70f65b48a110a9502de09801fe9234a737a8",
+        "id": "url:1",
+        "payload": {
+          "data": {
+            "brand_impersonation": false,
+            "confirmed_impersonation": false,
+            "homograph_detected": false,
+            "hostname": "news-gateway.example",
+            "normalized_url": "https://news-gateway.example/start",
+            "obfuscated": false,
+            "suspicious_tld": false,
+            "typosquat_target": null
+          },
+          "id": "url:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "url"
+        },
+        "type": "url"
+      },
+      {
+        "hash": "0x659425d00ec6aa6d2b1c2b35890c146bd73236ee4ef04f7ba8db3a6297afa456",
+        "id": "claim:1",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "url:1"
+          ],
+          "id": "claim:1",
+          "text": "Local URL normalization completed; domain structure is recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "id": "claim:2",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "tls:1"
+          ],
+          "id": "claim:2",
+          "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xafb167a994e5d1dbd1596f4eff504de94e319dc4677439257f4dd7466f246462",
+        "id": "claim:3",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "ti:1"
+          ],
+          "id": "claim:3",
+          "text": "No match was found in the cited threat feed; this does not establish safety."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xd333459e62ee9a3b119bb53434f8ea896b4f690555a164aa540a414072f3e119",
+        "id": "claim:4",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "redir:1"
+          ],
+          "id": "claim:4",
+          "text": "Redirect inspection recorded 3 cross-domain transitions."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "id": "cov:1",
+        "payload": {
+          "data": {
+            "redirects": "COMPLETE",
+            "threat_intel": "COMPLETE",
+            "tls": "COMPLETE",
+            "url": "COMPLETE"
+          },
+          "id": "cov:1",
+          "type": "coverage"
+        },
+        "type": "coverage"
+      },
+      {
+        "hash": "0xfec5216e983bc0f320d5cdca1ba2b649eb458c8800fa1fef23a979d6b5b2c284",
+        "id": "meta:1",
+        "payload": {
+          "data": {
+            "created_at": "2026-11-10T12:00:00Z",
+            "limitations": [],
+            "provenance": {
+              "analyzer": "fixture",
+              "collection": "fixture",
+              "fixture_id": "suspicious-3"
+            },
+            "redacted_url": "https://news-gateway.example/start",
+            "report_id": "0xe4489a9294c510492004cc5c90c37fa0866ba4ec2d6421f1122075e00f64ea5d",
+            "risk": "SUSPICIOUS",
+            "schema": "sealed-evidence/1",
+            "social_engineering_indicators": []
+          },
+          "id": "meta:1",
+          "type": "meta"
+        },
+        "type": "meta"
+      }
+    ],
+    "proofs_by_id": {
+      "claim:1": [
+        "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "0x568d2ab0d2662357a85802e9720046637a91fc9c74f5c3e295a0b8b4fac3203b",
+        "0xa02409096c159f2e6b0f7a171ac43c82b7362778ad07e0112f2060950c928434",
+        "0x6e61c553ff6973570aca39948023c5bbc1be129b70e84625651c239cb24fe3a5"
+      ],
+      "claim:2": [
+        "0x659425d00ec6aa6d2b1c2b35890c146bd73236ee4ef04f7ba8db3a6297afa456",
+        "0x568d2ab0d2662357a85802e9720046637a91fc9c74f5c3e295a0b8b4fac3203b",
+        "0xa02409096c159f2e6b0f7a171ac43c82b7362778ad07e0112f2060950c928434",
+        "0x6e61c553ff6973570aca39948023c5bbc1be129b70e84625651c239cb24fe3a5"
+      ],
+      "claim:3": [
+        "0xd333459e62ee9a3b119bb53434f8ea896b4f690555a164aa540a414072f3e119",
+        "0x47c56462cee8ef7d621a942742f7b4342dba78640764471aa3ca3f769e678fbe",
+        "0xa02409096c159f2e6b0f7a171ac43c82b7362778ad07e0112f2060950c928434",
+        "0x6e61c553ff6973570aca39948023c5bbc1be129b70e84625651c239cb24fe3a5"
+      ],
+      "claim:4": [
+        "0xafb167a994e5d1dbd1596f4eff504de94e319dc4677439257f4dd7466f246462",
+        "0x47c56462cee8ef7d621a942742f7b4342dba78640764471aa3ca3f769e678fbe",
+        "0xa02409096c159f2e6b0f7a171ac43c82b7362778ad07e0112f2060950c928434",
+        "0x6e61c553ff6973570aca39948023c5bbc1be129b70e84625651c239cb24fe3a5"
+      ],
+      "cov:1": [
+        "0xfec5216e983bc0f320d5cdca1ba2b649eb458c8800fa1fef23a979d6b5b2c284",
+        "0x88e8a324e0ad14434d3c689c595dce4082313b5ee13db9df68da4907327b85a1"
+      ],
+      "meta:1": [
+        "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "0x88e8a324e0ad14434d3c689c595dce4082313b5ee13db9df68da4907327b85a1"
+      ],
+      "redir:1": [
+        "0xfe5d8f65f68f87ff68d8cbdbbcf38a5d3dc1bbaba3c66c46c1bf357aaba19388",
+        "0x331cd1c33a971a8584c479ab9ca5bbbd15b4eaaeab66f3c61467884c0f290373",
+        "0x070646c705048a957ec33f88964c7cfc022a0dab8dea7698d9cedfd87339334a",
+        "0x6e61c553ff6973570aca39948023c5bbc1be129b70e84625651c239cb24fe3a5"
+      ],
+      "ti:1": [
+        "0x644fa151ef2ef4263280422c403ff5e6083d630902dc2934d48280c2fc27452c",
+        "0x331cd1c33a971a8584c479ab9ca5bbbd15b4eaaeab66f3c61467884c0f290373",
+        "0x070646c705048a957ec33f88964c7cfc022a0dab8dea7698d9cedfd87339334a",
+        "0x6e61c553ff6973570aca39948023c5bbc1be129b70e84625651c239cb24fe3a5"
+      ],
+      "tls:1": [
+        "0xf074709898c7f3295a1e2d3b864d70f65b48a110a9502de09801fe9234a737a8",
+        "0xddcea360a5dea4584bfd48d2bf71317c3141747e23a6ee07107f2f5119bba0cd",
+        "0x070646c705048a957ec33f88964c7cfc022a0dab8dea7698d9cedfd87339334a",
+        "0x6e61c553ff6973570aca39948023c5bbc1be129b70e84625651c239cb24fe3a5"
+      ],
+      "url:1": [
+        "0x409166cb32f4c737233f18b0914a5f0ff0f2b5d1f9022a296f3d91a7b418cb43",
+        "0xddcea360a5dea4584bfd48d2bf71317c3141747e23a6ee07107f2f5119bba0cd",
+        "0x070646c705048a957ec33f88964c7cfc022a0dab8dea7698d9cedfd87339334a",
+        "0x6e61c553ff6973570aca39948023c5bbc1be129b70e84625651c239cb24fe3a5"
+      ]
+    },
+    "root": "0x0978a354b0191b08d1cb4164f01bf0c58100b22608677008b243fc9c6be1ae6c"
+  },
+  "verification": {
+    "claim_grounding": true,
+    "computed_root": "0x0978a354b0191b08d1cb4164f01bf0c58100b22608677008b243fc9c6be1ae6c",
+    "expected_root": "0x0978a354b0191b08d1cb4164f01bf0c58100b22608677008b243fc9c6be1ae6c",
+    "failures": [],
+    "leaf_validity": {
+      "claim:1": true,
+      "claim:2": true,
+      "claim:3": true,
+      "claim:4": true,
+      "cov:1": true,
+      "meta:1": true,
+      "redir:1": true,
+      "ti:1": true,
+      "tls:1": true,
+      "url:1": true
+    },
+    "report_id": "0xe4489a9294c510492004cc5c90c37fa0866ba4ec2d6421f1122075e00f64ea5d",
+    "root_match": true,
+    "schema_match": true,
+    "status": "SUPPORTED",
+    "target_leaf_valid": null
+  }
+}

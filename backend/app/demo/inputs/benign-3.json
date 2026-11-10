@@ -1,0 +1,39 @@
+{
+  "fixture_id": "benign-3",
+  "title": "Unfamiliar Domain with Timed-Out Threat Intel (Must Yield INCONCLUSIVE)",
+  "expected_risk": "INCONCLUSIVE",
+  "input": {
+    "url": "https://research-notes.example-archive.org/paper.pdf",
+    "message": "Here is the link to the conference workshop proceedings we discussed."
+  },
+  "simulated_checks": {
+    "url": {
+      "normalized_url": "https://research-notes.example-archive.org/paper.pdf",
+      "typosquat_target": null,
+      "homograph_detected": false,
+      "suspicious_tld": false
+    },
+    "tls": {
+      "status": "COMPLETE",
+      "hostname_ok": true,
+      "expired": false,
+      "self_signed": false,
+      "issuer": "DigiCert Global G2 TLS RSA SHA256 2020 CA1",
+      "cert_sha256": "4cbdc9ff7dacbfa8907f942cc8efebf751f5781255e9ca4ae98bea5900030896",
+      "trusted": true
+    },
+    "threat_intel": {
+      "status": "TIMEOUT",
+      "provider": "openphish",
+      "matched": null,
+      "queried_at": "2026-11-10T12:00:00Z"
+    },
+    "redirects": {
+      "status": "COMPLETE",
+      "chain": [
+        "https://research-notes.example-archive.org/paper.pdf"
+      ],
+      "cross_domain_hops": 0
+    }
+  }
+}

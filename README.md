@@ -1,30 +1,33 @@
 # VERIDICT
 
-**Evidence before trust.** TRUST//INTERCEPT pauses navigation, investigates a destination, and turns the findings into a SEALED//EVIDENCE Passport. Every explanation cites evidence; a Merkle commitment makes alterations independently detectable.
+**Don't just trust the warning. Verify the evidence.** Powered by **EVIDENCE//GATE**. TRUST//INTERCEPT pauses navigation and turns findings into an Evidence Passport. Every explanation cites evidence; a Merkle commitment makes alterations independently detectable.
 
 Blockchain records integrity and history, **never truth or safety**. The internal schema remains `sealed-evidence/1`.
 
-## Start the complete stack
+## Deploy a production preview
 
-Prerequisites: a running Docker Desktop/Linux engine with Compose and network access for the initial dependency/image download.
+Use two Vercel projects from this repository: Next.js root **`frontend`** and FastAPI root **`backend`**. Follow [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) for exact settings, environment variables, smoke checks and limitations. No Docker, WSL, database service or local blockchain is required.
 
-```sh
-docker compose up --build
+The selected public preview serves six packaged fixture investigations with stable report URLs. It verifies evidence/claim integrity against separate release reference roots and explicitly states that public blockchain anchoring is disabled. Custom scanning is disabled in this profile. Native live investigations and genuine EVM integration remain available separately.
+
+## Run the deployment preview locally (Windows)
+
+After the native dependency installation below, build once with `pnpm.cmd --dir frontend build`. Start the backend in one PowerShell terminal from the repository root:
+
+```powershell
+$env:RUNTIME_MODE='serverless'
+$env:CHAIN_MODE='demo_fixture'
+backend\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000 --no-access-log
 ```
 
-Open **http://localhost:3000**. API documentation: **http://localhost:8000/docs**. No API keys, wallet, browser extension, or external target is needed for the six fixtures.
+Start the production frontend in a second terminal:
 
-Compose starts Hardhat, deploys EvidenceRegistry, starts FastAPI with SQLite, then starts the standalone Next.js production server. Host ports bind to loopback. The frontend's API proxy reads `BACKEND_URL` at runtime.
-
-`LIVE_CHECKS=false` is the default. Fixtures always use explicitly labeled deterministic adapters. Custom URLs run available local checks; unavailable mandatory collectors remain incomplete, producing `INCONCLUSIVE` unless a risk indicator fires. Once dependencies and images are cached, the running fixture demo needs no external service.
-
-Stop containers without deleting SQLite data:
-
-```sh
-docker compose down
+```powershell
+$env:BACKEND_BASE_URL='http://127.0.0.1:8000'
+pnpm.cmd --dir frontend start
 ```
 
-Hardhat's development ledger resets when its container restarts. Old SQLite reports remain historical records, but missing original anchors return 503. Create new reports after restarting the chain. The development chain is not durable production storage.
+Open **http://127.0.0.1:3000**. The localhost setting is explicit native configuration; deployed route handlers have no localhost fallback. The Vercel profile writes no reports or anchors to SQLite/process memory. Fixture records can be reopened after a cold start; unknown live IDs are unavailable.
 
 ## Native development
 
@@ -47,7 +50,7 @@ npm.cmd ci --prefix contracts
 pnpm.cmd --dir frontend install --frozen-lockfile
 ```
 
-Use four terminals, each initially at the repository root:
+For the native live/EVM workflow, use fresh terminals with `RUNTIME_MODE=native` and `CHAIN_MODE=auto`; the preview's `demo_fixture` setting is deliberately read-only. Use four terminals, each initially at the repository root:
 
 ```sh
 # Terminal 1
@@ -65,14 +68,15 @@ npm --prefix contracts run deploy
 uv run --directory backend uvicorn app.main:app --host 127.0.0.1 --port 8000 --no-access-log
 ```
 
-```sh
-# Terminal 4
-pnpm --dir frontend dev
+```powershell
+# Terminal 4 (Windows)
+$env:BACKEND_BASE_URL='http://127.0.0.1:8000'
+pnpm.cmd --dir frontend dev
 ```
 
 On PowerShell use `npm.cmd`, `npx.cmd`, `pnpm.cmd`, and `.\.tools\bin\uv.exe` in place of global equivalents. Deployment writes ignored `runtime/deployment.json`. Native `CHAIN_MODE=auto` selects the reachable registry at startup; `evm` requires it, and `fixture` explicitly selects memory. An adapter never changes during a running backend process.
 
-The simulated adapter verifies against an independent process-local anchor map, not the report's self-reported root. Receipts have `mode: fixture`, `network: fixture-memory`, and null transaction/block/contract fields. `/health` reports `chain_connected: false`. These anchors disappear on process restart; the UI labels them prominently.
+The **native** simulated adapter verifies against an independent process-local anchor map, not the report's self-reported root. Receipts have `mode: fixture`, `network: fixture-memory`, and null transaction/block/contract fields. These anchors disappear on restart. The separate **Vercel** fixture adapter uses packaged immutable references (`fixture-sealed-assets`); neither adapter claims public-chain verification.
 
 ## Architecture
 
@@ -180,7 +184,7 @@ Copy `.env.example` to `.env` for Compose, or export settings before native star
 | `OPENPHISH_CACHE_MAX_AGE` | 86400 seconds; unavailable/stale-feed failures remain unknown |
 | `GOOGLE_SAFE_BROWSING_KEY` | Optional v5 provider; unset means `UNCONFIGURED` |
 | `OPENAI_API_KEY`, `OPENAI_MODEL` | Both required for evidence-only Responses API; otherwise deterministic synthesis |
-| `BACKEND_URL` | Runtime frontend proxy target; default `http://127.0.0.1:8000` |
+| `BACKEND_BASE_URL` | Required runtime frontend proxy origin; `BACKEND_URL` remains an explicit legacy alias |
 | `CORS_ORIGINS` | Explicit localhost/loopback development origins |
 
 OpenAI uses strict structured output, no tools, bounded complete evidence JSON, independent validation, one retry, then deterministic synthesis. Live credentials/billing are not exercised by offline acceptance tests. See [official structured-output documentation](https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=responses).
@@ -223,7 +227,7 @@ With the real local EVM stack running:
 uv run --directory backend python scripts/rehearse.py --require-evm
 ```
 
-This creates six reports, checks verdicts, exercises 24 mutations and six resets, and reads every registered root/schema/timestamp directly from the contract independently of the API. CI runs all gates and Compose startup/rehearsal.
+This creates six reports, checks verdicts, exercises 24 mutations and six resets, and reads every registered root/schema/timestamp directly from the contract independently of the API. Required CI runs native checks and both browser profiles without Docker. Public preview deployment/smoke commands are in [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md).
 
 ## 90-second judge walkthrough
 

@@ -1,0 +1,379 @@
+{
+  "bundle": {
+    "ai_claims": [
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "url:1"
+        ],
+        "id": "claim:1",
+        "text": "Local URL normalization completed; domain structure is recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "tls:1"
+        ],
+        "id": "claim:2",
+        "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "ti:1"
+        ],
+        "id": "claim:3",
+        "text": "No match was found in the cited threat feed; this does not establish safety."
+      },
+      {
+        "confidence": "high",
+        "evidence_ids": [
+          "redir:1"
+        ],
+        "id": "claim:4",
+        "text": "Redirect inspection recorded 0 cross-domain transitions."
+      }
+    ],
+    "coverage": {
+      "redirects": "COMPLETE",
+      "threat_intel": "COMPLETE",
+      "tls": "COMPLETE",
+      "url": "COMPLETE"
+    },
+    "created_at": "2026-11-10T12:00:00Z",
+    "evidence": [
+      {
+        "data": {
+          "brand_impersonation": false,
+          "confirmed_impersonation": false,
+          "homograph_detected": false,
+          "hostname": "docs.python.org",
+          "normalized_url": "https://docs.python.org/3/",
+          "obfuscated": false,
+          "suspicious_tld": false,
+          "typosquat_target": null
+        },
+        "id": "url:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "url"
+      },
+      {
+        "data": {
+          "chain": [
+            "https://docs.python.org/3/"
+          ],
+          "cross_domain_hops": 0,
+          "limit_reached": false,
+          "loop_detected": false,
+          "ssrf_blocked": false,
+          "untrusted_destination": false
+        },
+        "id": "redir:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "redirect"
+      },
+      {
+        "data": {
+          "cert_sha256": "06b129c131d741e3b3a01bffa42f98191aaf2b573977e4dd0264d1f70042d51e",
+          "expired": false,
+          "hostname_ok": true,
+          "issuer": "Fixture Public CA",
+          "not_after": null,
+          "not_before": null,
+          "self_signed": false,
+          "trusted": true
+        },
+        "id": "tls:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "tls"
+      },
+      {
+        "data": {
+          "matched": false,
+          "provider": "openphish",
+          "queried_at": "2026-11-10T12:00:00Z"
+        },
+        "id": "ti:1",
+        "mode": "fixture",
+        "status": "COMPLETE",
+        "type": "threat_intel"
+      }
+    ],
+    "limitations": [],
+    "normalized_url": "https://docs.python.org/3/",
+    "provenance": {
+      "analyzer": "fixture",
+      "collection": "fixture",
+      "fixture_id": "benign-1"
+    },
+    "report_id": "0xb442c780614a88fa6d2f9f704f7778a17cdab627332f4d000eb5556495e21e6b",
+    "risk": "LOW_RISK",
+    "schema": "sealed-evidence/1",
+    "social_engineering_indicators": []
+  },
+  "chain_receipt": {
+    "block_number": null,
+    "contract_address": null,
+    "mode": "fixture",
+    "network": "fixture-sealed-assets",
+    "tx_hash": null
+  },
+  "merkle": {
+    "leaves": [
+      {
+        "hash": "0xfedb0b825aec2103f58eecc15c0cd87938a8a369de706c30d2bb810640218ac3",
+        "id": "redir:1",
+        "payload": {
+          "data": {
+            "chain": [
+              "https://docs.python.org/3/"
+            ],
+            "cross_domain_hops": 0,
+            "limit_reached": false,
+            "loop_detected": false,
+            "ssrf_blocked": false,
+            "untrusted_destination": false
+          },
+          "id": "redir:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "redirect"
+        },
+        "type": "redirect"
+      },
+      {
+        "hash": "0xfe5d8f65f68f87ff68d8cbdbbcf38a5d3dc1bbaba3c66c46c1bf357aaba19388",
+        "id": "ti:1",
+        "payload": {
+          "data": {
+            "matched": false,
+            "provider": "openphish",
+            "queried_at": "2026-11-10T12:00:00Z"
+          },
+          "id": "ti:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "threat_intel"
+        },
+        "type": "threat_intel"
+      },
+      {
+        "hash": "0xaacbc79f1bcc015ee533a099af5bb01f54bc66245f58b0f724c51dd94116b8ec",
+        "id": "tls:1",
+        "payload": {
+          "data": {
+            "cert_sha256": "06b129c131d741e3b3a01bffa42f98191aaf2b573977e4dd0264d1f70042d51e",
+            "expired": false,
+            "hostname_ok": true,
+            "issuer": "Fixture Public CA",
+            "not_after": null,
+            "not_before": null,
+            "self_signed": false,
+            "trusted": true
+          },
+          "id": "tls:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "tls"
+        },
+        "type": "tls"
+      },
+      {
+        "hash": "0xad1332c23408638c2dc1eae542b700b7422f1de8858fc736c0faeb8e31666421",
+        "id": "url:1",
+        "payload": {
+          "data": {
+            "brand_impersonation": false,
+            "confirmed_impersonation": false,
+            "homograph_detected": false,
+            "hostname": "docs.python.org",
+            "normalized_url": "https://docs.python.org/3/",
+            "obfuscated": false,
+            "suspicious_tld": false,
+            "typosquat_target": null
+          },
+          "id": "url:1",
+          "mode": "fixture",
+          "status": "COMPLETE",
+          "type": "url"
+        },
+        "type": "url"
+      },
+      {
+        "hash": "0x659425d00ec6aa6d2b1c2b35890c146bd73236ee4ef04f7ba8db3a6297afa456",
+        "id": "claim:1",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "url:1"
+          ],
+          "id": "claim:1",
+          "text": "Local URL normalization completed; domain structure is recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "id": "claim:2",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "tls:1"
+          ],
+          "id": "claim:2",
+          "text": "TLS inspection completed; hostname validity and certificate trust are recorded in the cited evidence."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xafb167a994e5d1dbd1596f4eff504de94e319dc4677439257f4dd7466f246462",
+        "id": "claim:3",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "ti:1"
+          ],
+          "id": "claim:3",
+          "text": "No match was found in the cited threat feed; this does not establish safety."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "id": "claim:4",
+        "payload": {
+          "confidence": "high",
+          "evidence_ids": [
+            "redir:1"
+          ],
+          "id": "claim:4",
+          "text": "Redirect inspection recorded 0 cross-domain transitions."
+        },
+        "type": "ai_claim"
+      },
+      {
+        "hash": "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "id": "cov:1",
+        "payload": {
+          "data": {
+            "redirects": "COMPLETE",
+            "threat_intel": "COMPLETE",
+            "tls": "COMPLETE",
+            "url": "COMPLETE"
+          },
+          "id": "cov:1",
+          "type": "coverage"
+        },
+        "type": "coverage"
+      },
+      {
+        "hash": "0xb5fae26c081645f3aa0d06ee20808e3345a73bfa77eff1fe08aeb0287a31e10b",
+        "id": "meta:1",
+        "payload": {
+          "data": {
+            "created_at": "2026-11-10T12:00:00Z",
+            "limitations": [],
+            "provenance": {
+              "analyzer": "fixture",
+              "collection": "fixture",
+              "fixture_id": "benign-1"
+            },
+            "redacted_url": "https://docs.python.org/3/",
+            "report_id": "0xb442c780614a88fa6d2f9f704f7778a17cdab627332f4d000eb5556495e21e6b",
+            "risk": "LOW_RISK",
+            "schema": "sealed-evidence/1",
+            "social_engineering_indicators": []
+          },
+          "id": "meta:1",
+          "type": "meta"
+        },
+        "type": "meta"
+      }
+    ],
+    "proofs_by_id": {
+      "claim:1": [
+        "0x4b4c3a2d356502f7850d897399cdcaf188fe13e401ee8dae0a195037684d7331",
+        "0xddaee05c2b3a01bb86e17002073cee47c953fb4207794d4f6f4690eb3a2c2c40",
+        "0x98ceb89be663bd29423847c1044721ed29e324a5bca8c1d6579b3fe165a3d1ed",
+        "0x8e38667a00a03c0b928d9573569e44d36afe52778a64de5bede3345b0c39eacb"
+      ],
+      "claim:2": [
+        "0x659425d00ec6aa6d2b1c2b35890c146bd73236ee4ef04f7ba8db3a6297afa456",
+        "0xddaee05c2b3a01bb86e17002073cee47c953fb4207794d4f6f4690eb3a2c2c40",
+        "0x98ceb89be663bd29423847c1044721ed29e324a5bca8c1d6579b3fe165a3d1ed",
+        "0x8e38667a00a03c0b928d9573569e44d36afe52778a64de5bede3345b0c39eacb"
+      ],
+      "claim:3": [
+        "0x637f44c91b0dc4a5504941d509f2824e59898178db6fcfb0696a1de08b1873e7",
+        "0x47c56462cee8ef7d621a942742f7b4342dba78640764471aa3ca3f769e678fbe",
+        "0x98ceb89be663bd29423847c1044721ed29e324a5bca8c1d6579b3fe165a3d1ed",
+        "0x8e38667a00a03c0b928d9573569e44d36afe52778a64de5bede3345b0c39eacb"
+      ],
+      "claim:4": [
+        "0xafb167a994e5d1dbd1596f4eff504de94e319dc4677439257f4dd7466f246462",
+        "0x47c56462cee8ef7d621a942742f7b4342dba78640764471aa3ca3f769e678fbe",
+        "0x98ceb89be663bd29423847c1044721ed29e324a5bca8c1d6579b3fe165a3d1ed",
+        "0x8e38667a00a03c0b928d9573569e44d36afe52778a64de5bede3345b0c39eacb"
+      ],
+      "cov:1": [
+        "0xb5fae26c081645f3aa0d06ee20808e3345a73bfa77eff1fe08aeb0287a31e10b",
+        "0xd61fc8ac4ae2bb16526ed30f6b851d499b2f069367c66c7ada73adc46e405038"
+      ],
+      "meta:1": [
+        "0xf9adf3131559d033ac7cd16d20ddb80038f4f4ef451723b9e9cdf8b07ea30393",
+        "0xd61fc8ac4ae2bb16526ed30f6b851d499b2f069367c66c7ada73adc46e405038"
+      ],
+      "redir:1": [
+        "0xfe5d8f65f68f87ff68d8cbdbbcf38a5d3dc1bbaba3c66c46c1bf357aaba19388",
+        "0x5488fb745626a24d7ce82b23ad18a60ef48e98598fa11b6e7b6fb64deb726e4e",
+        "0xeb5edb6242636cfcce0506a8bd903331765cc719d4d766fda6728fec0f6ad438",
+        "0x8e38667a00a03c0b928d9573569e44d36afe52778a64de5bede3345b0c39eacb"
+      ],
+      "ti:1": [
+        "0xfedb0b825aec2103f58eecc15c0cd87938a8a369de706c30d2bb810640218ac3",
+        "0x5488fb745626a24d7ce82b23ad18a60ef48e98598fa11b6e7b6fb64deb726e4e",
+        "0xeb5edb6242636cfcce0506a8bd903331765cc719d4d766fda6728fec0f6ad438",
+        "0x8e38667a00a03c0b928d9573569e44d36afe52778a64de5bede3345b0c39eacb"
+      ],
+      "tls:1": [
+        "0xad1332c23408638c2dc1eae542b700b7422f1de8858fc736c0faeb8e31666421",
+        "0xbf4444b716f9963585778475bac70a9cea3537448b50c5f4e7cbabc16f3cd31a",
+        "0xeb5edb6242636cfcce0506a8bd903331765cc719d4d766fda6728fec0f6ad438",
+        "0x8e38667a00a03c0b928d9573569e44d36afe52778a64de5bede3345b0c39eacb"
+      ],
+      "url:1": [
+        "0xaacbc79f1bcc015ee533a099af5bb01f54bc66245f58b0f724c51dd94116b8ec",
+        "0xbf4444b716f9963585778475bac70a9cea3537448b50c5f4e7cbabc16f3cd31a",
+        "0xeb5edb6242636cfcce0506a8bd903331765cc719d4d766fda6728fec0f6ad438",
+        "0x8e38667a00a03c0b928d9573569e44d36afe52778a64de5bede3345b0c39eacb"
+      ]
+    },
+    "root": "0xded971bba283e10c349d1c7291bf744fd93c5f693141d165031b2c1fcac5d6c5"
+  },
+  "verification": {
+    "claim_grounding": true,
+    "computed_root": "0xded971bba283e10c349d1c7291bf744fd93c5f693141d165031b2c1fcac5d6c5",
+    "expected_root": "0xded971bba283e10c349d1c7291bf744fd93c5f693141d165031b2c1fcac5d6c5",
+    "failures": [],
+    "leaf_validity": {
+      "claim:1": true,
+      "claim:2": true,
+      "claim:3": true,
+      "claim:4": true,
+      "cov:1": true,
+      "meta:1": true,
+      "redir:1": true,
+      "ti:1": true,
+      "tls:1": true,
+      "url:1": true
+    },
+    "report_id": "0xb442c780614a88fa6d2f9f704f7778a17cdab627332f4d000eb5556495e21e6b",
+    "root_match": true,
+    "schema_match": true,
+    "status": "SUPPORTED",
+    "target_leaf_valid": null
+  }
+}

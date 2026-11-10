@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ShieldCheck, ArrowUpRight } from "lucide-react";
 import "./globals.css";
+import DeploymentNotice from "@/components/DeploymentNotice";
 
-export const metadata: Metadata = { title: "VERIDICT — Evidence before trust", description: "Investigate a destination. Ground every claim. Seal the evidence. Verify it independently." };
+export const metadata: Metadata = { title: "VERIDICT — Verify the evidence", description: "Don't just trust the warning. Verify the evidence. Powered by EVIDENCE//GATE." };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en"><body>
@@ -12,7 +13,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <span className="nav-label">SECURITY INTELLIGENCE / EVIDENCE INTEGRITY</span>
       <Link href="/#sandbox" className="nav-link">Investigation desk <ArrowUpRight size={14}/></Link>
     </div></header>
+    <div className="shell"><DeploymentNotice/></div>
     <main className="shell">{children}</main>
-    <footer className="shell footer"><span>VERIDICT / HACKMATRIX LAB</span><span>Blockchain attests to integrity. Evidence supports the verdict.</span><span>SEALED-EVIDENCE/1</span></footer>
+    <footer className="shell footer"><span>VERIDICT / EVIDENCE//GATE</span><span>Don&apos;t just trust the warning. Verify the evidence.</span><span>SEALED-EVIDENCE/1</span></footer>
   </body></html>;
 }

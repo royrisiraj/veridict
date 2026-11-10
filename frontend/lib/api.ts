@@ -11,7 +11,10 @@ export async function api<T>(path: string, init?: RequestInit): Promise<T> {
 
 export async function streamInvestigation(input: InvestigationInput, signal: AbortSignal, onStage: (stage: string) => void): Promise<Report> {
   const response = await fetch("/api/investigate", { method: "POST", headers: { "Content-Type": "application/json", Accept: "text/event-stream" }, body: JSON.stringify(input), signal });
-  if (!response.ok || !response.body) throw new Error("Inspection unavailable. Navigation remains blocked.");
+  if (!response.ok || !response.body) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error((error.detail ?? "Inspection unavailable.") + " Navigation remains blocked.");
+  }
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";

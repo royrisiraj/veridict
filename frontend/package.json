@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "schema:generate": "openapi-typescript openapi.json -o lib/api.generated.ts",
     "schema:check": "node scripts/check-schema.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:deployment": "playwright test --config playwright.deployment.config.ts"
   },
   "dependencies": {
     "next": "~16.4.0",

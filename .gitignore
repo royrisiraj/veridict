@@ -22,3 +22,4 @@ frontend/playwright-report/
 frontend/tsconfig.tsbuildinfo
 runtime/
 .env.local
+.vercel/

@@ -1,0 +1,42 @@
+{
+  "fixture_id": "benign-1",
+  "title": "Official documentation over valid HTTPS",
+  "expected_risk": "LOW_RISK",
+  "input": {
+    "url": "https://docs.python.org/3/",
+    "message": "Here is the documentation for our workshop."
+  },
+  "simulated_checks": {
+    "url": {
+      "normalized_url": "https://docs.python.org/3/",
+      "typosquat_target": null,
+      "homograph_detected": false,
+      "confirmed_impersonation": false,
+      "brand_impersonation": false,
+      "suspicious_tld": false
+    },
+    "tls": {
+      "status": "COMPLETE",
+      "hostname_ok": true,
+      "expired": false,
+      "self_signed": false,
+      "trusted": true,
+      "issuer": "Fixture Public CA",
+      "cert_sha256": "06b129c131d741e3b3a01bffa42f98191aaf2b573977e4dd0264d1f70042d51e"
+    },
+    "threat_intel": {
+      "status": "COMPLETE",
+      "provider": "openphish",
+      "matched": false,
+      "queried_at": "2026-11-10T12:00:00Z"
+    },
+    "redirects": {
+      "status": "COMPLETE",
+      "chain": [
+        "https://docs.python.org/3/"
+      ],
+      "cross_domain_hops": 0,
+      "untrusted_destination": false
+    }
+  }
+}

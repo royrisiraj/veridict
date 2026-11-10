@@ -12,10 +12,12 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from app.chain.registry import AnchorUnavailableError, create_registry
 from app.config import Settings
 from app.db import Database
-from app.fixtures import fixture_metadata
+from app.deployment import FixtureRegistry, FixtureReportStore, UnavailableRegistry, fixture_report_id
+from app.fixtures import fixture_metadata, load_fixture
 from app.models import (FixtureMetadata, HealthResponse, InvestigateRequest, InvestigationReport,
     TamperRequest, TamperResponse, VerificationResponse, VerifyRequest)
-from app.pipeline import investigate
+from app.pipeline import STAGES, investigate
+from app.security.url import normalize_url
 from app.verifier import Verifier
 
 
@@ -26,9 +28,16 @@ def create_app(settings: Settings | None = None, registry=None):
 
     @asynccontextmanager
     async def lifespan(application):
-        database = Database(settings.database_path)
+        hosted = settings.runtime_mode == "serverless" or settings.chain_mode == "demo_fixture"
+        database = FixtureReportStore() if hosted else Database(settings.database_path)
         application.state.database = database
-        application.state.registry = registry if registry is not None else await asyncio.to_thread(create_registry, settings)
+        if registry is not None:
+            selected_registry = registry
+        elif hosted:
+            selected_registry = FixtureRegistry() if settings.chain_mode in {"auto", "fixture", "demo_fixture"} else UnavailableRegistry()
+        else:
+            selected_registry = await asyncio.to_thread(create_registry, settings)
+        application.state.registry = selected_registry
         application.state.verifier = Verifier(database, application.state.registry)
         try:
             yield
@@ -62,7 +71,14 @@ def create_app(settings: Settings | None = None, registry=None):
     @application.get("/health", response_model=HealthResponse)
     async def health():
         chain = application.state.registry
-        return HealthResponse(chain_connected=await asyncio.to_thread(lambda: chain.connected), contract_address=chain.address, chain_mode=chain.mode)
+        hosted = isinstance(application.state.database, FixtureReportStore)
+        mode = ("UNAVAILABLE" if chain.mode == "unavailable" else "DEMO_FIXTURE" if isinstance(chain, FixtureRegistry)
+                else "PUBLIC_CHAIN" if chain.mode == "evm" and chain.chain_id != 31337 else "LOCAL_DEVELOPMENT")
+        if isinstance(chain, FixtureRegistry) and not chain.path.is_file():
+            mode = "UNAVAILABLE"
+        return HealthResponse(chain_connected=bool(getattr(chain, "health_connected", False)), contract_address=chain.address,
+            chain_mode=chain.mode, runtime_mode=settings.runtime_mode, verification_mode=mode,
+            live_scanning_enabled=not hosted, report_storage="packaged-read-only" if hosted else "sqlite")
 
     @application.get("/api/fixtures", response_model=list[FixtureMetadata])
     async def fixtures():
@@ -71,6 +87,21 @@ def create_app(settings: Settings | None = None, registry=None):
     @application.post("/api/investigate", response_model=InvestigationReport)
     async def investigate_route(payload: InvestigateRequest, request: Request):
         async def run(emit):
+            if isinstance(application.state.database, FixtureReportStore):
+                if application.state.registry.mode == "unavailable":
+                    raise AnchorUnavailableError("No valid verification source is configured")
+                if not payload.fixture_id:
+                    raise HTTPException(status_code=403, detail="Demo fixture mode: custom investigations are disabled. Choose one of the six packaged cases.")
+                fixture = load_fixture(payload.fixture_id)
+                if normalize_url(payload.url).normalized_url != normalize_url(fixture["input"]["url"]).normalized_url:
+                    raise ValueError("Fixture URL mismatch")
+                for stage in STAGES:
+                    await emit(stage)
+                report = application.state.database.get(fixture_report_id(payload.fixture_id))
+                if report is None:
+                    raise AnchorUnavailableError("Packaged fixture passport is missing")
+                checked = await asyncio.to_thread(application.state.verifier.verify_bundle, report.bundle.report_id, report.bundle)
+                return report.model_copy(update={"verification": checked})
             return await investigate(payload, settings, application.state.database, application.state.registry, application.state.verifier, emit)
 
         if "text/event-stream" not in request.headers.get("accept", ""):
@@ -88,6 +119,8 @@ def create_app(settings: Settings | None = None, registry=None):
                 try:
                     result = await run(emit)
                     await queue.put(("report", result.model_dump(mode="json", by_alias=True)))
+                except HTTPException as exc:
+                    await queue.put(("error", {"detail": exc.detail}))
                 except Exception:
                     await queue.put(("error", {"detail": "Inspection unavailable. Navigation remains blocked."}))
                 finally:
@@ -133,7 +166,37 @@ def create_app(settings: Settings | None = None, registry=None):
         response.headers["X-Content-Type-Options"] = "nosniff"
         return response
 
+    application.add_middleware(RequestLimitMiddleware)
     return application
+
+
+class RequestLimitMiddleware:
+    """Bound JSON bodies before parsing, including chunked requests."""
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http" or scope["method"] != "POST":
+            return await self.app(scope, receive, send)
+        body = bytearray()
+        while True:
+            message = await receive()
+            if message["type"] == "http.disconnect":
+                return
+            body.extend(message.get("body", b""))
+            if len(body) > 524288:
+                response = JSONResponse(status_code=413, content={"detail": "Request exceeds inspection limits"})
+                return await response(scope, receive, send)
+            if not message.get("more_body", False):
+                break
+        delivered = False
+        async def bounded_receive():
+            nonlocal delivered
+            if not delivered:
+                delivered = True
+                return {"type": "http.request", "body": bytes(body), "more_body": False}
+            return await receive()
+        await self.app(scope, bounded_receive, send)
 
 
 app = create_app()
