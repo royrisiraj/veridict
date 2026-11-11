@@ -5,7 +5,9 @@
   "scripts": {
     "test": "hardhat test",
     "node": "hardhat node --hostname 0.0.0.0",
-    "deploy": "hardhat run scripts/deploy.ts --network localhost"
+    "deploy": "hardhat run scripts/deploy.ts --network localhost",
+    "deploy:sepolia": "hardhat run scripts/deploy-sepolia.ts --network sepolia",
+    "anchor:fixtures": "hardhat run scripts/anchor-fixtures.ts --network sepolia"
   },
   "overrides": {
     "solc": { "tmp": "0.2.7" },
