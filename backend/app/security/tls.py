@@ -53,7 +53,7 @@ def _inspect_tls(host: str, port: int) -> TLSEvidence:
     try:
         addresses = validate_public_destination(host)
         last_error = None
-        for address in addresses:
+        for address in addresses[:2]:
             try:
                 try:
                     der = read_certificate(host, port, address, True)

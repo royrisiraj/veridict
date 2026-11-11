@@ -187,7 +187,7 @@ class ChainReceipt(StrictModel):
     block_number: int | None
     contract_address: str | None
     network: str
-    mode: Literal["evm", "fixture"]
+    mode: Literal["evm", "fixture", "unanchored"]
 
 
 class VerificationFailure(StrictModel):
@@ -206,6 +206,7 @@ class VerificationResponse(StrictModel):
     schema_match: bool
     failures: list[VerificationFailure]
     leaf_validity: dict[str, bool]
+    public_chain_status: Literal["VERIFIED", "MISMATCH", "NOT_ANCHORED", "UNAVAILABLE", "NOT_CONFIGURED"] | None = Field(default=None, exclude_if=lambda v: v is None)
 
 
 class InvestigationReport(StrictModel):
@@ -257,4 +258,13 @@ class HealthResponse(StrictModel):
     runtime_mode: Literal["native", "serverless"] = "native"
     verification_mode: Literal["DEMO_FIXTURE", "PUBLIC_CHAIN", "LOCAL_DEVELOPMENT", "UNAVAILABLE"] = "LOCAL_DEVELOPMENT"
     live_scanning_enabled: bool = True
-    report_storage: Literal["sqlite", "packaged-read-only"] = "sqlite"
+    report_storage: Literal["sqlite", "packaged-read-only", "vercel_blob", "unavailable"] = "sqlite"
+
+
+class AnchorResponse(StrictModel):
+    report_id: Hash32
+    status: Literal["VERIFIED", "MISMATCH", "NOT_ANCHORED", "UNAVAILABLE", "NOT_CONFIGURED", "PENDING"]
+    chain_id: int = 11155111
+    contract_address: str | None = None
+    receipt: ChainReceipt | None = None
+    explorer_url: str | None = None

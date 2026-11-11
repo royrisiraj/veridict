@@ -16,6 +16,16 @@ class Settings:
     runtime_mode: str = field(default_factory=lambda: "serverless" if serverless_environment() else "native")
     database_path: str = field(default_factory=lambda: os.getenv("DATABASE_PATH", str(ROOT / "runtime/veridict.db")))
     live_checks: bool = field(default_factory=lambda: os.getenv("LIVE_CHECKS", "false").lower() == "true")
+    report_storage: str = field(default_factory=lambda: os.getenv("REPORT_STORAGE", "packaged" if serverless_environment() else "sqlite"))
+    scan_api_secret: str = field(default_factory=lambda: os.getenv("SCAN_API_SECRET", ""), repr=False)
+    scan_allowed_hosts: tuple[str, ...] = field(default_factory=lambda: tuple(h.strip().lower() for h in os.getenv("SCAN_ALLOWED_HOSTS", "").split(",") if h.strip()))
+    scan_hourly_limit: int = field(default_factory=lambda: int(os.getenv("SCAN_HOURLY_LIMIT", "20")))
+    scan_client_limit: int = field(default_factory=lambda: int(os.getenv("SCAN_CLIENT_LIMIT", "5")))
+    anchor_api_secret: str = field(default_factory=lambda: os.getenv("ANCHOR_API_SECRET", ""), repr=False)
+    anchor_enabled: bool = field(default_factory=lambda: os.getenv("ANCHOR_ENABLED", "false").lower() == "true")
+    anchor_daily_limit: int = field(default_factory=lambda: int(os.getenv("ANCHOR_DAILY_LIMIT", "6")))
+    anchor_max_fee_gwei: int = field(default_factory=lambda: int(os.getenv("ANCHOR_MAX_FEE_GWEI", "20")))
+    anchor_max_gas: int = field(default_factory=lambda: int(os.getenv("ANCHOR_MAX_GAS", "150000")))
     chain_mode: str = field(default_factory=lambda: os.getenv("CHAIN_MODE", "auto"))
     rpc_url: str = field(default_factory=lambda: os.getenv("RPC_URL", "" if serverless_environment() else "http://127.0.0.1:8545"), repr=False)
     chain_id: int | None = field(default_factory=lambda: int(os.environ["CHAIN_ID"]) if os.getenv("CHAIN_ID") else None)
@@ -35,3 +45,9 @@ class Settings:
         object.__setattr__(self, "chain_mode", self.chain_mode.lower())
         if self.chain_mode not in {"auto", "evm", "fixture", "demo_fixture", "public_chain", "unavailable"}:
             raise ValueError("Invalid CHAIN_MODE")
+        if self.report_storage not in {"sqlite", "packaged", "vercel_blob"}:
+            raise ValueError("Invalid REPORT_STORAGE")
+        if not (1 <= self.scan_hourly_limit <= 100 and 1 <= self.scan_client_limit <= 20 and 1 <= self.anchor_daily_limit <= 20):
+            raise ValueError("Limits exceed controlled rollout bounds")
+        if not (1 <= self.anchor_max_fee_gwei <= 100 and 50000 <= self.anchor_max_gas <= 200000):
+            raise ValueError("Invalid signing budget")

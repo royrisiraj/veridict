@@ -10,7 +10,7 @@ from app.canonical import keccak256
 from app.fixtures import load_fixture
 from app.intel.openphish import lookup_openphish
 from app.intel.safebrowsing import lookup_safebrowsing
-from app.models import (CoverageMap, EvidenceBundle, InvestigationReport, Provenance, RedirectData, RedirectEvidence,
+from app.models import (ChainReceipt, CoverageMap, EvidenceBundle, InvestigationReport, Provenance, RedirectData, RedirectEvidence,
     ThreatData, ThreatEvidence, TLSData, TLSEvidence, URLEvidence, URLData, VerificationResponse)
 from app.risk import classify
 from app.sealing import seal_bundle
@@ -23,12 +23,16 @@ from app.security.url import normalize_url
 STAGES = ["url", "redirects", "tls", "threat_intel", "ai", "seal"]
 
 
-async def investigate(request, settings, database, registry, verifier, emit, report_id: str | None = None):
+async def investigate(request, settings, database, registry, verifier, emit, report_id: str | None = None, seal_only: bool = False):
     fixture = load_fixture(request.fixture_id) if request.fixture_id else None
     if fixture and normalize_url(request.url).normalized_url != normalize_url(fixture["input"]["url"]).normalized_url:
         raise ValueError("Fixture input URL does not match the selected fixture")
     raw_url = fixture["input"]["url"] if fixture else request.url
     raw_message = fixture["input"]["message"] if fixture else request.message or ""
+    if not fixture and settings.live_checks:
+        submitted = urlsplit(raw_url)
+        if submitted.username is not None or submitted.password is not None:
+            raise ValueError("Credential-bearing scan destinations are prohibited")
     mode = "fixture" if fixture else ("live" if settings.live_checks else "local")
     created = "2026-11-10T12:00:00Z" if fixture else datetime.now(timezone.utc).isoformat()
     await emit("url")
@@ -48,7 +52,7 @@ async def investigate(request, settings, database, registry, verifier, emit, rep
         values["chain"] = [redact_url(u) for u in values["chain"]]
         redirect = RedirectEvidence(id="redir:1", status=status, mode="fixture", data=RedirectData(**values))
     elif settings.live_checks:
-        redirect = await inspect_redirects(safe_url)
+        redirect = await inspect_redirects(safe_url, allowed_hosts=settings.scan_allowed_hosts or None)
     else:
         blocked = False
         try:
@@ -97,12 +101,16 @@ async def investigate(request, settings, database, registry, verifier, emit, rep
         social_engineering_indicators=analysis.social_engineering_indicators, limitations=analysis.limitations)
     await emit("seal")
     merkle = seal_bundle(bundle)
-    receipt = await asyncio.to_thread(registry.register, bundle.report_id, merkle.root)
+    if seal_only:
+        await asyncio.to_thread(database.save_reference, bundle, merkle)
+        receipt = ChainReceipt(tx_hash=None, block_number=None, contract_address=None, network="sealed-not-anchored", mode="unanchored")
+    else:
+        receipt = await asyncio.to_thread(registry.register, bundle.report_id, merkle.root)
     # Verification uses a provisional report solely for original proofs/source; it still reads the independent anchor.
     provisional = InvestigationReport.model_construct(bundle=bundle, merkle=merkle, chain_receipt=receipt)
     verification = await asyncio.to_thread(verifier.verify_bundle, bundle.report_id, bundle, None, provisional)
     if verification.status != "SUPPORTED":
         raise RuntimeError("Newly sealed report did not independently verify")
     report = InvestigationReport(bundle=bundle, merkle=merkle, chain_receipt=receipt, verification=verification)
-    database.save(report)
+    await asyncio.to_thread(database.save, report)
     return report

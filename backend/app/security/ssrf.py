@@ -121,4 +121,7 @@ def destination(url: str) -> tuple[str, int]:
     parts = urlsplit(url)
     if parts.scheme not in {"http", "https"} or not parts.hostname or parts.username or parts.password:
         raise SSRFBlockedError("Only credential-free HTTP(S) destinations are allowed")
-    return parts.hostname, parts.port or (443 if parts.scheme == "https" else 80)
+    port = parts.port or (443 if parts.scheme == "https" else 80)
+    if port not in {80, 443}:
+        raise SSRFBlockedError("Unsafe destination port blocked")
+    return parts.hostname, port

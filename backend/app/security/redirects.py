@@ -18,7 +18,7 @@ async def fetch_location(url: str, host: str, addresses: list[str]) -> tuple[int
                 return response.status_code, location
 
 
-async def inspect_redirects(url: str, max_hops: int = 4) -> RedirectEvidence:
+async def inspect_redirects(url: str, max_hops: int = 4, allowed_hosts: tuple[str, ...] | None = None) -> RedirectEvidence:
     chain = [redact_url(url)]
     seen = set()
     current = url
@@ -27,6 +27,8 @@ async def inspect_redirects(url: str, max_hops: int = 4) -> RedirectEvidence:
     try:
         for hop in range(max_hops + 1):
             host, _ = destination(current)
+            if allowed_hosts is not None and host.lower() not in allowed_hosts:
+                raise ValueError("Destination outside controlled rollout")
             addresses = await asyncio.to_thread(validate_public_destination, host)
             if current in seen:
                 data.loop_detected = True
@@ -38,6 +40,9 @@ async def inspect_redirects(url: str, max_hops: int = 4) -> RedirectEvidence:
                 break
             next_url = urljoin(current, location)
             next_host, _ = destination(next_url)
+            if allowed_hosts is not None and next_host.lower() not in allowed_hosts:
+                status = "INCOMPLETE"
+                break
             # Validate even the destination beyond the permitted redirect count.
             await asyncio.to_thread(validate_public_destination, next_host)
             if hop == max_hops:
