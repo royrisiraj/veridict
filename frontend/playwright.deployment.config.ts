@@ -4,7 +4,7 @@ const servers = Array.isArray(base.webServer) ? base.webServer : [];
 export default defineConfig({
   ...base, testMatch: "deployment.spec.ts",
   webServer: servers.map((server, index) => {
-    const env: Record<string, string> = index === 0 ? { RUNTIME_MODE: "serverless" } : { BACKEND_PROTECTION_BYPASS: "veridict-server-only-canary" };
+    const env: Record<string, string> = index === 0 ? { RUNTIME_MODE: "serverless" } : { BACKEND_PROTECTION_BYPASS: "veridict-server-only-canary", SCAN_API_SECRET: "veridict-private-scan-canary-32-characters" };
     return { ...server, reuseExistingServer: false, env };
   }),
 });

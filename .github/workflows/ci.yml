@@ -13,6 +13,8 @@ jobs:
         with: {version: '11.24.0'}
       - run: npm ci --prefix contracts
       - run: npm --prefix contracts test
+      - name: Typecheck Sepolia release scripts (no credentials or broadcast)
+        run: node contracts/node_modules/typescript/bin/tsc --noEmit --target ES2022 --module NodeNext --moduleResolution NodeNext --strict --esModuleInterop --skipLibCheck contracts/hardhat.config.ts contracts/scripts/deploy-sepolia.ts contracts/scripts/anchor-fixtures.ts
       - run: uv sync --frozen
         working-directory: backend
       - run: uv run pytest
