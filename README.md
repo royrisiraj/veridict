@@ -6,6 +6,11 @@ Blockchain records integrity and history, **never truth or safety**. The interna
 
 ## Deploy a production preview
 
+For the optional live-scanning, private Blob persistence and Sepolia upgrade, follow
+[PHASE2_DEPLOYMENT.md](PHASE2_DEPLOYMENT.md). Scanning seals a report without spending
+funds; anchoring is a separate protected operator action. The existing six-case
+fixture profile remains the rollback default. No Sepolia deployment is assumed.
+
 Use two Vercel projects from this repository: Next.js root **`frontend`** and FastAPI root **`backend`**. Follow [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) for exact settings, environment variables, smoke checks and limitations. No Docker, WSL, database service or local blockchain is required.
 
 The selected public preview serves six packaged fixture investigations with stable report URLs. It verifies evidence/claim integrity against separate release reference roots and explicitly states that public blockchain anchoring is disabled. Custom scanning is disabled in this profile. Native live investigations and genuine EVM integration remain available separately.
