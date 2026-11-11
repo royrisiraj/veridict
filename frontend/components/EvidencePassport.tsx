@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Check, ChevronDown, ExternalLink, Fingerprint, GitBranch, LockKeyhole, ShieldCheck } from "lucide-react";
 import { api } from "@/lib/api";
-import { riskLabels, type Bundle, type Report, type TamperResult, type Verification } from "@/lib/types";
+import { riskLabels, type AnchorStatus, type Bundle, type Report, type TamperResult, type Verification } from "@/lib/types";
 import VerificationBadge from "./VerificationBadge";
 import TamperPanel from "./TamperPanel";
 import { anchorLabel } from "@/lib/anchoring";
@@ -21,6 +21,7 @@ export default function EvidencePassport({ report }: { report: Report }) {
   const [error, setError] = useState("");
   const [highlight, setHighlight] = useState("");
   const [checking, setChecking] = useState(false);
+  const [anchor, setAnchor] = useState<AnchorStatus | null>(null);
   const reportId = original.bundle.report_id;
   const bundle: Bundle = mutation?.mutated_bundle ?? original.bundle;
   const merkle = mutation?.mutated_merkle ?? original.merkle;
@@ -28,6 +29,7 @@ export default function EvidencePassport({ report }: { report: Report }) {
   useEffect(() => {
     let active = true;
     api<Verification>(`reports/${reportId}/verify`, { method: "POST", body: "{}" }).then((value) => { if (active) setVerification(value); }).catch((e) => { if (active) setError(e.message); });
+    api<AnchorStatus>(`reports/${reportId}/anchor`).then((value) => { if (active) setAnchor(value); }).catch(() => { if (active) setAnchor(null); });
     return () => { active = false; };
   }, [reportId]);
   async function verify() {
@@ -56,7 +58,7 @@ export default function EvidencePassport({ report }: { report: Report }) {
     <div className="passport-grid"><div className="passport-main">
       <section className="panel anchor-panel"><div className="panel-heading"><h2><GitBranch size={18}/>The evidence commitment</h2><span className="status-chip">{anchorLabel(original.chain_receipt)}</span></div>
         <div className="merkle-diagram"><div className="merkle-root"><Fingerprint size={22}/><span>MERKLE ROOT<code>{merkle.root.slice(0, 22)}…{merkle.root.slice(-8)}</code></span></div><div className="tree-stem"/><div className="tree-leaves">{merkle.leaves.slice(0, 6).map((leaf) => <button key={leaf.id} onClick={() => cite(leaf.id)} className={verification?.leaf_validity[leaf.id] === false ? "invalid" : ""}>{leaf.id}<span>{leaf.hash.slice(0, 10)}…</span></button>)}</div><span className="micro">{merkle.leaves.length} TYPED LEAVES · SORTED PAIRS · ODD-LEAF PROMOTION</span></div>
-        <div className="anchor-details"><div><label>{original.chain_receipt.mode === "fixture" ? "REFERENCE ROOT" : "REGISTERED ROOT"}</label><code>{original.merkle.root}</code></div><div><label>NETWORK / SOURCE</label><span>{anchorLabel(original.chain_receipt)}</span></div><div><label>TRANSACTION</label><code>{original.chain_receipt.tx_hash ?? "None — fixture integrity reference, not a blockchain transaction"}</code></div>{original.chain_receipt.contract_address && <div><label>CONTRACT / BLOCK {original.chain_receipt.block_number}</label><code>{original.chain_receipt.contract_address}</code></div>}</div>
+        <div className="anchor-details"><div><label>ORIGINAL SEALED ROOT</label><code>{original.merkle.root}</code></div><div><label>NETWORK / SOURCE</label><span>{anchorLabel(anchor?.receipt ?? original.chain_receipt)}</span></div><div><label>TRANSACTION</label><code>{(anchor?.receipt ?? original.chain_receipt).tx_hash ?? "None — no confirmed registration transaction is available"}</code></div>{anchor?.contract_address && <div><label>SEPOLIA / CHAIN {anchor.chain_id} / {anchor.status.replaceAll("_", " ")}</label><code>{anchor.contract_address}</code>{anchor.receipt && <span>Block {anchor.receipt.block_number}</span>}{anchor.explorer_url && <a href={anchor.explorer_url} target="_blank" rel="noreferrer">View real transaction on Sepolia Etherscan <ExternalLink size={12}/></a>}</div>}</div>
       </section>
       <section className="coverage-section"><div className="section-mini-heading"><h2>Collection coverage</h2><span className="micro">UNKNOWN IS NEVER SAFE</span></div><div className="coverage-grid">{Object.entries(bundle.coverage).map(([key, value]) => <div key={key} className={value === "COMPLETE" ? "complete" : "incomplete"}><span>{key.replaceAll("_", " ")}</span><strong>{value === "COMPLETE" && <Check size={13}/>} {value}</strong></div>)}</div></section>
       <section className="claims-section"><div className="section-mini-heading"><h2>Grounded analysis</h2><span className="micro">AI EXPLAINS · CODE CLASSIFIES</span></div><div className="claims-list">{bundle.ai_claims.map((claim, index) => <article key={claim.id} className="claim-card"><span className="claim-number">{String(index + 1).padStart(2, "0")}</span><div><p>{claim.text}</p><div className="evidence-pills">{claim.evidence_ids.map((id) => <button key={id} className={bundle.evidence.some((e) => e.id === id) ? "" : "missing"} onClick={() => cite(id)}>{id}<ArrowUpRight size={11}/></button>)}</div></div></article>)}</div>{limitations.length > 0 && <div className="limitations"><strong>Collection limitations</strong><p>{limitations.join(" · ")}</p></div>}</section>

@@ -4,6 +4,7 @@ export function isPublicChain(receipt: Receipt): boolean {
   return receipt.mode === "evm" && /^evm:\d+$/.test(receipt.network) && receipt.network !== "evm:31337";
 }
 export function anchorLabel(receipt: Receipt): string {
+  if (receipt.mode === "unanchored") return "SEALED, NOT YET ANCHORED";
   if (receipt.mode === "fixture") return receipt.network === "fixture-sealed-assets" ? "PACKAGED FIXTURE REFERENCE / NOT ON-CHAIN" : "SIMULATED LOCAL REFERENCE / NOT ON-CHAIN";
   if (!isPublicChain(receipt)) return "LOCAL DEVELOPMENT CHAIN";
   const id = receipt.network.slice(4);

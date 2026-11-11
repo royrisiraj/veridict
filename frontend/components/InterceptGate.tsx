@@ -9,7 +9,7 @@ import { anchorLabel } from "@/lib/anchoring";
 const stages = [
   ["url", "URL & IDNA normalization"], ["redirects", "SSRF & redirect inspection"],
   ["tls", "TLS X.509 certificate"], ["threat_intel", "Threat intelligence"],
-  ["ai", "AI claim grounding"], ["seal", "Merkle seal & registration"],
+  ["ai", "AI claim grounding"], ["seal", "Merkle seal & durable storage"],
 ];
 
 export default function InterceptGate({ input, onClose }: { input: InvestigationInput; onClose: () => void }) {

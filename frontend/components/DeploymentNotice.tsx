@@ -14,6 +14,6 @@ export default function DeploymentNotice() {
   const mode = health?.verification_mode;
   return <aside className="deployment-notice" data-testid="deployment-mode" role="status">
     <strong>{failed || mode === "UNAVAILABLE" ? "Verification service unavailable — no integrity assurance is available." : mode === "DEMO_FIXTURE" ? "Demo fixture mode — public blockchain anchoring is not enabled." : mode === "PUBLIC_CHAIN" ? "Public-chain backend configured — verify each passport independently." : health ? "Local development mode — public blockchain anchoring is not enabled." : "Checking deployment verification mode…"}</strong>
-    {mode === "DEMO_FIXTURE" && <span>Evidence integrity and AI grounding are checked against packaged release references. Custom scanning is disabled.</span>}
+    {mode === "DEMO_FIXTURE" && <span>Evidence integrity and AI grounding use independent references. {health?.live_scanning_enabled ? "Controlled live scanning is available; new reports are sealed without automatic transactions." : "Custom scanning is disabled."}</span>}
   </aside>;
 }

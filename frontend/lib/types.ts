@@ -7,6 +7,7 @@ export type InvestigationInput = components["schemas"]["InvestigateRequest"];
 export type TamperResult = components["schemas"]["TamperResponse"];
 export type Mutation = components["schemas"]["TamperRequest"]["mutation"];
 export type Health = components["schemas"]["HealthResponse"];
+export type AnchorStatus = components["schemas"]["AnchorResponse"];
 export type Risk = components["schemas"]["RiskClass"];
 
 export const riskLabels: Record<Risk, string> = {

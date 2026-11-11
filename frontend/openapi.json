@@ -1,6 +1,71 @@
 {
   "components": {
     "schemas": {
+      "AnchorResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "chain_id": {
+            "default": 11155111,
+            "title": "Chain Id",
+            "type": "integer"
+          },
+          "contract_address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contract Address"
+          },
+          "explorer_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Explorer Url"
+          },
+          "receipt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChainReceipt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "report_id": {
+            "pattern": "^0x[0-9a-f]{64}$",
+            "title": "Report Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "VERIFIED",
+              "MISMATCH",
+              "NOT_ANCHORED",
+              "UNAVAILABLE",
+              "NOT_CONFIGURED",
+              "PENDING"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "report_id",
+          "status"
+        ],
+        "title": "AnchorResponse",
+        "type": "object"
+      },
       "ChainReceipt": {
         "additionalProperties": false,
         "properties": {
@@ -29,7 +94,8 @@
           "mode": {
             "enum": [
               "evm",
-              "fixture"
+              "fixture",
+              "unanchored"
             ],
             "title": "Mode",
             "type": "string"
@@ -437,7 +503,9 @@
             "default": "sqlite",
             "enum": [
               "sqlite",
-              "packaged-read-only"
+              "packaged-read-only",
+              "vercel_blob",
+              "unavailable"
             ],
             "title": "Report Storage",
             "type": "string"
@@ -1380,6 +1448,24 @@
             "title": "Leaf Validity",
             "type": "object"
           },
+          "public_chain_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "VERIFIED",
+                  "MISMATCH",
+                  "NOT_ANCHORED",
+                  "UNAVAILABLE",
+                  "NOT_CONFIGURED"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Public Chain Status"
+          },
           "report_id": {
             "pattern": "^0x[0-9a-f]{64}$",
             "title": "Report Id",
@@ -1563,6 +1649,82 @@
           }
         },
         "summary": "Report Route"
+      }
+    },
+    "/api/reports/{report_id}/anchor": {
+      "get": {
+        "operationId": "anchor_status_route_api_reports__report_id__anchor_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnchorResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Anchor Status Route"
+      },
+      "post": {
+        "operationId": "anchor_route_api_reports__report_id__anchor_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnchorResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Anchor Route"
       }
     },
     "/api/reports/{report_id}/tamper-demo": {

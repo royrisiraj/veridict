@@ -6,10 +6,10 @@ export const maxDuration = 60;
 async function proxy(request: NextRequest, context: { params: Promise<{ path: string[] }> }) {
   const { path } = await context.params;
   const route = path.join("/");
-  if (!/^(?:health|fixtures|investigate|reports\/0x[0-9a-f]{64}(?:\/(?:verify|tamper-demo))?)$/.test(route)) {
+  if (!/^(?:health|fixtures|investigate|reports\/0x[0-9a-f]{64}(?:\/(?:verify|tamper-demo|anchor))?)$/.test(route)) {
     return Response.json({ detail: "Unknown API route" }, { status: 404 });
   }
-  const isRead = /^(?:health|fixtures|reports\/0x[0-9a-f]{64})$/.test(route);
+  const isRead = /^(?:health|fixtures|reports\/0x[0-9a-f]{64}(?:\/anchor)?)$/.test(route);
   if (request.method !== (isRead ? "GET" : "POST")) return Response.json({ detail: "Method not allowed" }, { status: 405, headers: { Allow: isRead ? "GET" : "POST" } });
   const configured = process.env.BACKEND_BASE_URL || process.env.BACKEND_URL;
   if (!configured) return Response.json({ detail: "Backend is not configured. Set the server-side BACKEND_BASE_URL environment variable." }, { status: 503 });
@@ -43,6 +43,12 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     }
     const headers: Record<string, string> = { "Content-Type": "application/json", Accept: request.headers.get("accept") ?? "application/json" };
     if (process.env.BACKEND_PROTECTION_BYPASS) headers["x-vercel-protection-bypass"] = process.env.BACKEND_PROTECTION_BYPASS;
+    // Never relay caller-supplied authorization headers. Registration remains an
+    // operator-only backend endpoint and cannot be called through this proxy.
+    if (route === "investigate" && process.env.SCAN_API_SECRET) {
+      headers["x-veridict-scan-secret"] = process.env.SCAN_API_SECRET;
+      headers["x-veridict-client"] = request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() || "shared-preview";
+    }
     const upstream = await fetch(new URL(route === "health" ? "/health" : "/api/" + route, base), {
       method: request.method, body, cache: "no-store",
       headers, redirect: "manual",

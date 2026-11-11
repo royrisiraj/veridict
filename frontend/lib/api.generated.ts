@@ -55,6 +55,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/reports/{report_id}/anchor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Anchor Status Route */
+        get: operations["anchor_status_route_api_reports__report_id__anchor_get"];
+        put?: never;
+        /** Anchor Route */
+        post: operations["anchor_route_api_reports__report_id__anchor_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/reports/{report_id}/tamper-demo": {
         parameters: {
             query?: never;
@@ -110,6 +128,26 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AnchorResponse */
+        AnchorResponse: {
+            /**
+             * Chain Id
+             * @default 11155111
+             */
+            chain_id: number;
+            /** Contract Address */
+            contract_address?: string | null;
+            /** Explorer Url */
+            explorer_url?: string | null;
+            receipt?: components["schemas"]["ChainReceipt"] | null;
+            /** Report Id */
+            report_id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "VERIFIED" | "MISMATCH" | "NOT_ANCHORED" | "UNAVAILABLE" | "NOT_CONFIGURED" | "PENDING";
+        };
         /** ChainReceipt */
         ChainReceipt: {
             /** Block Number */
@@ -120,7 +158,7 @@ export interface components {
              * Mode
              * @enum {string}
              */
-            mode: "evm" | "fixture";
+            mode: "evm" | "fixture" | "unanchored";
             /** Network */
             network: string;
             /** Tx Hash */
@@ -251,7 +289,7 @@ export interface components {
              * @default sqlite
              * @enum {string}
              */
-            report_storage: "sqlite" | "packaged-read-only";
+            report_storage: "sqlite" | "packaged-read-only" | "vercel_blob" | "unavailable";
             /**
              * Runtime Mode
              * @default native
@@ -622,6 +660,8 @@ export interface components {
             leaf_validity: {
                 [key: string]: boolean;
             };
+            /** Public Chain Status */
+            public_chain_status?: ("VERIFIED" | "MISMATCH" | "NOT_ANCHORED" | "UNAVAILABLE" | "NOT_CONFIGURED") | null;
             /** Report Id */
             report_id: string;
             /** Root Match */
@@ -722,6 +762,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["InvestigationReport"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    anchor_status_route_api_reports__report_id__anchor_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                report_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnchorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    anchor_route_api_reports__report_id__anchor_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                report_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnchorResponse"];
                 };
             };
             /** @description Validation Error */
